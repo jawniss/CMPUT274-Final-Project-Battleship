@@ -65,7 +65,7 @@ void battlefield() {
 
 
 
-
+/*
 void a1(){
   if (a1 == positionOfShip){
     Serial.println("hit");
@@ -331,7 +331,7 @@ void e5(){
     e5 = "-";
   }
 }
-
+*/
 
 int main() {
     setup();
