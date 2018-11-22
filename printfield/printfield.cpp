@@ -27,10 +27,13 @@ void battlefield(){
 	}
 */
 
+
 int main() {
     setup();
 		Serial.println(a1);
 		Serial.println(b2);
 		Serial.println(c3);
+		n = sprintf (buffer, %d %d %d %d %d, a1, a2, a3, a4, a5);
+		printf ("",buffer,n);
 		return 0;
 	}
