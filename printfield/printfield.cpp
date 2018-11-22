@@ -37,30 +37,30 @@ void battlefield(){
 
 void battlefield() {
 	Serial.print(a1);
-	Serial.print(a1);
-	Serial.print(a1);
-	Serial.print(a1);
-	Serial.println(a1);
+	Serial.print(a2);
+	Serial.print(a3);
+	Serial.print(a4);
+	Serial.println(a5);
 	Serial.print(b1);
-	Serial.print(b1);
-	Serial.print(b1);
-	Serial.print(b1);
-	Serial.println(b1);
+	Serial.print(b2);
+	Serial.print(b3);
+	Serial.print(b4);
+	Serial.println(b5);
 	Serial.print(c1);
-	Serial.print(c1);
-	Serial.print(c1);
-	Serial.print(c1);
-	Serial.println(c1);
+	Serial.print(c2);
+	Serial.print(c3);
+	Serial.print(c4);
+	Serial.println(c5);
 	Serial.print(d1);
-	Serial.print(d1);
-	Serial.print(d1);
-	Serial.print(d1);
-	Serial.println(d1);
+	Serial.print(d2);
+	Serial.print(d3);
+	Serial.print(d4);
+	Serial.println(d5);
 	Serial.print(e1);
-	Serial.print(e1);
-	Serial.print(e1);
-	Serial.print(e1);
-	Serial.println(e1);
+	Serial.print(e2);
+	Serial.print(e3);
+	Serial.print(e4);
+	Serial.println(e5);
 }
 
 
