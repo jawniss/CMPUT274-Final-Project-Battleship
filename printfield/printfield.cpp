@@ -16,6 +16,14 @@ int d1 = 0, d2 = 0, d3 = 0, d4 = 0, d5 = 0;
 int e1 = 0, e2 = 0, e3 = 0, e4 = 0, e5 = 0;
 
 /*
+COULD TRY
+char a1 = X
+	maybe before error was char a1 = "x"
+  not valid because strings are different from chars?
+*/
+
+
+/*
 int positionOfShip;
 void battlefield(){
 	// THE SERIAL PRINT FUNCTION DOESN'T ALLOW MULTIPLE VARIABLES TO BE PRINTED
@@ -26,6 +34,37 @@ void battlefield(){
 	Serial.println(e1, e2, e3, e4, e5);
 	}
 */
+
+void battlefield() {
+	Serial.print(a1);
+	Serial.print(a1);
+	Serial.print(a1);
+	Serial.print(a1);
+	Serial.println(a1);
+	Serial.print(b1);
+	Serial.print(b1);
+	Serial.print(b1);
+	Serial.print(b1);
+	Serial.println(b1);
+	Serial.print(c1);
+	Serial.print(c1);
+	Serial.print(c1);
+	Serial.print(c1);
+	Serial.println(c1);
+	Serial.print(d1);
+	Serial.print(d1);
+	Serial.print(d1);
+	Serial.print(d1);
+	Serial.println(d1);
+	Serial.print(e1);
+	Serial.print(e1);
+	Serial.print(e1);
+	Serial.print(e1);
+	Serial.println(e1);
+}
+
+
+
 
 void a1(){
   if (a1 == positionOfShip){
@@ -296,10 +335,9 @@ void e5(){
 
 int main() {
     setup();
-		Serial.println(a1);
-		Serial.println(b2);
-		Serial.println(c3);
-		n = sprintf (buffer, %d %d %d %d %d, a1, a2, a3, a4, a5);
-		printf ("",buffer,n);
+		battlefield();
+		//BELOW TRYING TO EFFICIENCY
+		//n = sprintf (buffer, %d %d %d %d %d, a1, a2, a3, a4, a5);
+		//printf ("",buffer,n);
 		return 0;
 	}
