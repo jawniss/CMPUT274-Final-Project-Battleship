@@ -10,16 +10,11 @@ void setup() {
   randomSeed(analogRead(0)); // to randomize the seed
 }
 int shipLocation[5];
+int botshipLocation[5];
 int remainingShips = 5;
 //int shipLocation[4];
 char position[25];
-/*
-int a1 = 0, a2 = 0, a3 = 0, a4 = 0, a5 = 0;
-int b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0;
-int c1 = 0, c2 = 0, c3 = 0, c4 = 0, c5 = 0;
-int d1 = 0, d2 = 0, d3 = 0, d4 = 0, d5 = 0;
-int e1 = 0, e2 = 0, e3 = 0, e4 = 0, e5 = 0;
-*/
+
 void arrayMaker(){
     for (int i = 0; i < 25; i++){
         position[i] = '?';
@@ -34,57 +29,19 @@ char a1 = X
 */
 
 
-/*
-int positionOfShip;
-void battlefield(){
-    // THE SERIAL PRINT FUNCTION DOESN'T ALLOW MULTIPLE VARIABLES TO BE PRINTED
-  Serial.println(a1, a2, a3, a4, a5);
-  Serial.println(b1, b2, b3, b4, b5);
-  Serial.println(c1, c2, c3, c4, c5);
-    Serial.println(d1, d2, d3, d4, d5);
-    Serial.println(e1, e2, e3, e4, e5);
-    }
-*/
-/*
-void battlefield() {
-    Serial.print(a1);
-    Serial.print(a2);
-    Serial.print(a3);
-    Serial.print(a4);
-    Serial.println(a5);
-    Serial.print(b1);
-    Serial.print(b2);
-    Serial.print(b3);
-    Serial.print(b4);
-    Serial.println(b5);
-    Serial.print(c1);
-    Serial.print(c2);
-    Serial.print(c3);
-    Serial.print(c4);
-    Serial.println(c5);
-    Serial.print(d1);
-    Serial.print(d2);
-    Serial.print(d3);
-    Serial.print(d4);
-    Serial.println(d5);
-    Serial.print(e1);
-    Serial.print(e2);
-    Serial.print(e3);
-    Serial.print(e4);
-    Serial.println(e5);
-}
-*/
+
+
 
 void battlefield() {
   Serial.println(  "Positioning: \n");
-    Serial.println(  " | ""  "  "0"  " |  "  "1"  " |  "  "2"  " | "   "3"  "  | "  "4"" | " );
-    Serial.println(  "-----------------------");
-    Serial.println(  " | ""  "  "5"  " |  "  "6"  " |  "  "7"  " | "   "8"  "  | "  "9"" | "  );
-    Serial.println(  "-----------------------");
+    Serial.println(  " | ""  " "0"  " |  "  "1"  " |  "  "2"  " | "    "3"  "  |  "   "4"" | " );
+    Serial.println(  "---------------------------");
+    Serial.println(  " | ""  " "5"  " |  "  "6"  " |  "  "7"  " | "    "8"  "  |  "   "9"" | "  );
+    Serial.println(  "---------------------------");
     Serial.println(  " | "" "  "10"  " | "  "11"  " | "  "12"  " | "  "13"  " | "  "14"" | " );
-    Serial.println(  "-----------------------");
+    Serial.println(  "---------------------------");
     Serial.println(  " | "" "  "15"  " | "  "16"  " | "  "17"  " | "  "18"  " | "  "19"" | " );
-    Serial.println(  "-----------------------");
+    Serial.println(  "---------------------------");
     Serial.println(  " | "" "  "20"  " | "  "21"  " | "  "22"  " | "  "23"  " | "  "24"" | " );
 
         Serial.print(    "Your opponents field: ");
@@ -154,18 +111,9 @@ void battlefield() {
         Serial.print( " |  " );
         Serial.print((position[24]));
         Serial.println(" | ");
-    Serial.println(  "-------------------------------");
+    Serial.println(  "---------------------------");
 
 
-        /*
-    Serial.println(  " | "" "  (position[5])  "  | "  (position[6])  "  | "  (position[7])  "  | "  (position[8])  "  | "  (position[9])" | "  );
-    Serial.println(  "-----------------------");
-    Serial.println(  " | "" "  (position[10])  "  | "  (position[11])  "  | "  (position[12])  "  | "  (position[13])  "  | "  (position[14])" | "  );
-    Serial.println(  "-----------------------");
-    Serial.println(  " | "" "  (position[15])  "  | "  (position[16])  "  | "  (position[17])  "  | "  (position[18])  "  | "  (position[19])" | "  );
-    Serial.println(  "-----------------------");
-    Serial.println(  " | "" "  (position[20])  "  | "  (position[21])  "  | "  (position[22])  "  | "  (position[23])  "  | "  (position[24])" | "  );
-*/
 }
 
 void randomizer() {
@@ -191,6 +139,36 @@ void randomizer() {
     Serial.println((shipLocation[i]));
     }
 }
+
+void computerRandomizer() {
+    for (int i = 0; i<5; i++) {
+        bool checkUnique2; //variable to checkUnique or number is already used
+        int n; //variable to store the number in
+        do {
+      n = random(0,24);
+            //checkUnique or number is already used:
+            checkUnique2 = true;
+            for (int j = 0; j<i; j++)
+                if (n == botshipLocation[j]) //if number is already used
+                {
+                    checkUnique2 = false; //set checkUnique to false
+                    break; //no need to checkUnique the other elements of value[]
+                }
+        } while (checkUnique2 == false); //loop until new, unique number is found
+        botshipLocation[i] = n; //store the generated number in the array
+    }
+  botshipLocation[5] = random(0,24);
+    for (int i = 0; i < 5; i++) //Just to see the random numbers
+    {
+    Serial.println((botshipLocation[i]));
+    }
+}
+
+/*
+void bot(){
+
+}
+*/
 
 /*
 void randomizer(){
@@ -273,8 +251,7 @@ void a5(){
 */
 
 /*
-
-void hitOrMiss(char attackcoords)
+void hitOrMiss()
 {
     //First ship
     if (attackcoords == random_numbers[0])
@@ -368,21 +345,6 @@ void hitOrMiss(char attackcoords)
 }
 */
 
-
-/*
-void inputs() {
-  if (Serial.available()) {
-    char attackcoords = Serial.read();
-    hitOrMiss();
-
-
-    }
-  }
-}
-*/
-
-
-
 void inputs() {
   int u = 1;
   char str[32];
@@ -450,13 +412,16 @@ void inputs() {
 
 
 
-
 int main() {
     setup();
-    arrayMaker();
+        arrayMaker();
     randomizer();
+        computerRandomizer();
     battlefield();
-    inputs();
+        //BELOW TRYING TO EFFICIENCY
+        //n = sprintf (buffer, %d %d %d %d %d, a1, a2, a3, a4, a5);
+        //printf ("",buffer,n);
+        inputs();
     Serial.flush();
         return 0;
     }
