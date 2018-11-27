@@ -22,7 +22,7 @@ int e1 = 0, e2 = 0, e3 = 0, e4 = 0, e5 = 0;
 */
 void arrayMaker(){
     for (int i = 0; i < 25; i++){
-        position[i] = '?';
+        position[i] = 'X';
     }
 }
 
@@ -103,6 +103,60 @@ void battlefield() {
         Serial.print((position[4]));
         Serial.println(" | ");
     Serial.println(  "-----------------------");
+
+        Serial.print( " |  " );
+        Serial.print((position[5]));
+        Serial.print( " |  " );
+        Serial.print((position[6]));
+        Serial.print( " |  " );
+        Serial.print((position[7]));
+        Serial.print( " |  " );
+        Serial.print((position[8]));
+        Serial.print( " |  " );
+        Serial.print((position[9]));
+        Serial.println(" | ");
+    Serial.println(  "-----------------------");
+
+        Serial.print( " |  " );
+        Serial.print((position[10]));
+        Serial.print( " |  " );
+        Serial.print((position[11]));
+        Serial.print( " |  " );
+        Serial.print((position[12]));
+        Serial.print( " |  " );
+        Serial.print((position[13]));
+        Serial.print( " |  " );
+        Serial.print((position[14]));
+        Serial.println(" | ");
+    Serial.println(  "-----------------------");
+
+        Serial.print( " |  " );
+        Serial.print((position[15]));
+        Serial.print( " |  " );
+        Serial.print((position[16]));
+        Serial.print( " |  " );
+        Serial.print((position[17]));
+        Serial.print( " |  " );
+        Serial.print((position[18]));
+        Serial.print( " |  " );
+        Serial.print((position[19]));
+        Serial.println(" | ");
+    Serial.println(  "-----------------------");
+
+        Serial.print( " |  " );
+        Serial.print((position[20]));
+        Serial.print( " |  " );
+        Serial.print((position[21]));
+        Serial.print( " |  " );
+        Serial.print((position[22]));
+        Serial.print( " |  " );
+        Serial.print((position[23]));
+        Serial.print( " |  " );
+        Serial.print((position[24]));
+        Serial.println(" | ");
+    Serial.println(  "-----------------------");
+
+
         /*
     Serial.println(  " | "" "  (position[5])  "  | "  (position[6])  "  | "  (position[7])  "  | "  (position[8])  "  | "  (position[9])" | "  );
     Serial.println(  "-----------------------");
@@ -217,219 +271,6 @@ void a5(){
   }
 }
 
-void b1(){
-  if (b1 == positionOfShip){
-    Serial.println("hit");
-    b1 = "O";
-  }
-  else {
-    Serial.println("miss");
-    b1 = "-";
-  }
-}
-
-void b2(){
-  if (b2 == positionOfShip){
-    Serial.println("hit");
-    b2 = "O";
-  }
-  else {
-    Serial.println("miss");
-    b2 = "-";
-  }
-}
-
-void b3(){
-  if (b3 == positionOfShip){
-    Serial.println("hit");
-    b3 = "O";
-  }
-  else {
-    Serial.println("miss");
-    b3 = "-";
-  }
-}
-void b4(){
-  if (b4 == positionOfShip){
-    Serial.println("hit");
-    b4 = "O";
-  }
-  else {
-    Serial.println("miss");
-    b4 = "-";
-  }
-}
-void b5(){
-  if (b5 == positionOfShip){
-    Serial.println("hit");
-    b5 = "O";
-  }
-  else {
-    Serial.println("miss");
-    b5 = "-";
-  }
-}
-
-void c1(){
-  if (c1 == positionOfShip){
-    Serial.println("hit");
-    c1 = "O";
-  }
-  else {
-    Serial.println("miss");
-    c1 = "-";
-  }
-}
-
-void c2(){
-  if (c2 == positionOfShip){
-    Serial.println("hit");
-    c2 = "O";
-  }
-  else {
-    Serial.println("miss");
-    c2 = "-";
-  }
-}
-
-void c3(){
-  if (c3 == positionOfShip){
-    Serial.println("hit");
-    c3 = "O";
-  }
-  else {
-    Serial.println("miss");
-    c3 = "-";
-  }
-}
-void c4(){
-  if (c4 == positionOfShip){
-    Serial.println("hit");
-    c4 = "O";
-  }
-  else {
-    Serial.println("miss");
-    c4 = "-";
-  }
-}
-void c5(){
-  if (c5 == positionOfShip){
-    Serial.println("hit");
-    c5 = "O";
-  }
-  else {
-    Serial.println("miss");
-    c5 = "-";
-  }
-}
-
-void d1(){
-  if (d1 == positionOfShip){
-    Serial.println("hit");
-    d1 = "O";
-  }
-  else {
-    Serial.println("miss");
-    d1 = "-";
-  }
-}
-
-void d2(){
-  if (d2 == positionOfShip){
-    Serial.println("hit");
-    d2 = "O";
-  }
-  else {
-    Serial.println("miss");
-    d2 = "-";
-  }
-}
-
-void d3(){
-  if (d3 == positionOfShip){
-    Serial.println("hit");
-    d3 = "O";
-  }
-  else {
-    Serial.println("miss");
-    d3 = "-";
-  }
-}
-void d4(){
-  if (d4 == positionOfShip){
-    Serial.println("hit");
-    d4 = "O";
-  }
-  else {
-    Serial.println("miss");
-    d4 = "-";
-  }
-}
-void d5(){
-  if (d5 == positionOfShip){
-    Serial.println("hit");
-    d5 = "O";
-  }
-  else {
-    Serial.println("miss");
-    d5 = "-";
-  }
-}
-
-
-void e1(){
-  if (e1 == positionOfShip){
-    Serial.println("hit");
-    e1 = "O";
-  }
-  else {
-    Serial.println("miss");
-    e1 = "-";
-  }
-}
-
-void e2(){
-  if (e2 == positionOfShip){
-    Serial.println("hit");
-    e2 = "O";
-  }
-  else {
-    Serial.println("miss");
-    a2 = "-";
-  }
-}
-
-void e3(){
-  if (e3 == positionOfShip){
-    Serial.println("hit");
-    e3 = "O";
-  }
-  else {
-    Serial.println("miss");
-    e3 = "-";
-  }
-}
-void e4(){
-  if (e4 == positionOfShip){
-    Serial.println("hit");
-    e4 = "O";
-  }
-  else {
-    Serial.println("miss");
-    e4 = "-";
-  }
-}
-void e5(){
-  if (e5 == positionOfShip){
-    Serial.println("hit");
-    e5 = "O";
-  }
-  else {
-    Serial.println("miss");
-    e5 = "-";
-  }
-}
-*/
 
 /*
 void hitOrMiss()
