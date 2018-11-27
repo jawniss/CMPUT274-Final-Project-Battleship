@@ -10,12 +10,21 @@ void setup() {
   randomSeed(analogRead(0)); // to randomize the seed
 }
 int shipLocation[5];
+int remainingShips = 5;
 //int shipLocation[4];
+int position[25];
+/*
 int a1 = 0, a2 = 0, a3 = 0, a4 = 0, a5 = 0;
 int b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0;
 int c1 = 0, c2 = 0, c3 = 0, c4 = 0, c5 = 0;
 int d1 = 0, d2 = 0, d3 = 0, d4 = 0, d5 = 0;
 int e1 = 0, e2 = 0, e3 = 0, e4 = 0, e5 = 0;
+*/
+void arrayMaker(){
+    for (int i = 0; i < 25; i++){
+        position[i] = '?';
+    }
+}
 
 /*
 COULD TRY
@@ -68,28 +77,41 @@ void battlefield() {
 
 void battlefield() {
   Serial.println(  "Positioning: \n");
-    Serial.println(  "  "  "0"  " |  "  "1"  " |  "  "2"  " | "  "3"  "  | "  "4" );
+    Serial.println(  " | ""  "  "0"  " |  "  "1"  " |  "  "2"  " | "  "3"  "  | "  "4"" | " );
     Serial.println(  "-----------------------");
-    Serial.println(  "  "  "5"  " |  "  "6"  " |  "  "7"  " | "  "8"  "  | "  "9"  );
+    Serial.println(  " | ""  "  "5"  " |  "  "6"  " |  "  "7"  " | "  "8"  "  | "  "9"" | "  );
     Serial.println(  "-----------------------");
-    Serial.println(  " "  "10"  " | "  "11"  " | "  "12"  " | "  "13"  " | "  "14" );
+    Serial.println(  " | "" "  "10"  " | "  "11"  " | "  "12"  " | "  "13"  " | "  "14"" | " );
     Serial.println(  "-----------------------");
-    Serial.println(  " "  "15"  " | "  "16"  " | "  "17"  " | "  "18"  " | "  "19" );
+    Serial.println(  " | "" "  "15"  " | "  "16"  " | "  "17"  " | "  "18"  " | "  "19"" | " );
     Serial.println(  "-----------------------");
-    Serial.println(  " "  "20"  " | "  "21"  " | "  "22"  " | "  "23"  " | "  "24" );
+    Serial.println(  " | "" "  "20"  " | "  "21"  " | "  "22"  " | "  "23"  " | "  "24"" | " );
 
-  /*
-    Serial.print(  "\n\n"  "Your opponents field: "   counter (placeholder)  " their ships left!\n";
-    Serial.print(  " "  position[0]  "  | "  position[1]  "  | "  position[2]  "  | "  position[3]  "  | "  position[4]  );
-    Serial.print(  "-----------------------");
-    Serial.print(  " "  position[5]  "  | "  position[6]  "  | "  position[7]  "  | "  position[8]  "  | "  position[9]  );
-    Serial.print(  "-----------------------");
-    Serial.print(  " "  position[10]  "  | "  position[11]  "  | "  position[12]  "  | "  position[13]  "  | "  position[14]  );
-    Serial.print(  "-----------------------");
-    Serial.print(  " "  position[15]  "  | "  position[16]  "  | "  position[17]  "  | "  position[18]  "  | "  position[19]  );
-    Serial.print(  "-----------------------");
-    Serial.print(  " "  position[20]  "  | "  position[21]  "  | "  position[22]  "  | "  position[23]  "  | "  position[24]  );
-  */
+        Serial.print(    "Your opponents field: ");
+        Serial.print(remainingShips);
+        Serial.println(" their ships left!");
+
+    Serial.print( " |  " );
+        Serial.print((position[0]));
+        Serial.print( " |  " );
+        Serial.print((position[1]));
+        Serial.print( " |  " );
+        Serial.print((position[2]));
+        Serial.print( " |  " );
+        Serial.print((position[3]));
+        Serial.print( " |  " );
+        Serial.print((position[4]));
+        Serial.println(" | ");
+    Serial.println(  "-----------------------");
+        /*
+    Serial.println(  " | "" "  (position[5])  "  | "  (position[6])  "  | "  (position[7])  "  | "  (position[8])  "  | "  (position[9])" | "  );
+    Serial.println(  "-----------------------");
+    Serial.println(  " | "" "  (position[10])  "  | "  (position[11])  "  | "  (position[12])  "  | "  (position[13])  "  | "  (position[14])" | "  );
+    Serial.println(  "-----------------------");
+    Serial.println(  " | "" "  (position[15])  "  | "  (position[16])  "  | "  (position[17])  "  | "  (position[18])  "  | "  (position[19])" | "  );
+    Serial.println(  "-----------------------");
+    Serial.println(  " | "" "  (position[20])  "  | "  (position[21])  "  | "  (position[22])  "  | "  (position[23])  "  | "  (position[24])" | "  );
+*/
 }
 
 void randomizer() {
@@ -409,17 +431,109 @@ void e5(){
 }
 */
 
-
+/*
+void hitOrMiss()
+{
+    //First ship
+    if (attackcoords == random_numbers[0])
+    {
+        //remainingShips--;
+        position[attackcoords] = 'X';
+        battlefield();
+        Serial.println("Hit a ship");
+        remainingShips = (remainingShips - 1);
+        if (remainingShips == 0)//checks whether all ships were hit
+        {
+            battlefield();
+            //valid_input = true;
+            //setup_done = false;
+         Serial.println("You hit all the ships you win !");
+        }
+    }
+    // Second ship
+    else if (attackcoords == random_numbers[1])
+    {
+        //remainingShips--;
+        position[attackcoords] = 'X';
+        battlefield();
+        Serial.println("Hit a ship");
+        remainingShips = (remainingShips - 1);
+        if (remainingShips == 0)//checks whether all ships were hit
+        {
+            battlefield();
+            //valid_input = true;
+            //setup_done = false;
+         Serial.println("You hit all the ships you win !");
+        }
+    }
+    //Third ship
+    else if (attackcoords == random_numbers[2])
+    {
+        //remainingShips--;
+        position[attackcoords] = 'X';
+        battlefield();
+        Serial.println("Hit a ship");
+        remainingShips = (remainingShips - 1);
+        if (remainingShips == 0)//checks whether all ships were hit
+        {
+            battlefield();
+            //valid_input = true;
+            //setup_done = false;
+         Serial.println("You hit all the ships you win !");
+        }
+    }
+    //Forth ship
+    else if (attackcoords == random_numbers[3])
+    {
+        //remainingShips--;
+        position[attackcoords] = 'X';
+        battlefield();
+        Serial.println("Hit a ship");
+        remainingShips = (remainingShips - 1);
+        if (remainingShips == 0)//checks whether all ships were hit
+        {
+            battlefield();
+            //valid_input = true;
+            //setup_done = false;
+         Serial.println("You hit all the ships you win !");
+        }
+    }
+    //Fith ship
+    else if (attackcoords == random_numbers[4])
+    {
+        //remainingShips--;
+        position[attackcoords] = 'X';
+        battlefield();
+        Serial.println("Hit a ship");
+        remainingShips = (remainingShips - 1);
+        if (remainingShips == 0)//checks whether all ships were hit
+        {
+            battlefield();
+            //valid_input = true;
+            //setup_done = false;
+         Serial.println("You hit all the ships you win !");
+        }
+    }
+    else
+    {
+        position[attackcoords] = '-';
+        //system("CLS");
+        battlefield();
+        Serial.println("You did not hit a ship!");
+        //valid_input = false;
+        //setup_done = true;
+    }
+}
+*/
 
 /*
-void hitormiss() {
-  if (attackcoords == positionOfShip) {
-    Serial.println("HIT");
-    attackcoords = "HIT";
-  }
-  else {
-    Serial.println("MISS");
-    attackcoords = "MISS";
+void inputs() {
+  if (Serial.available()) {
+    char attackcoords = Serial.read();
+    hitOrMiss();
+
+
+    }
   }
 }
 */
@@ -428,12 +542,12 @@ void hitormiss() {
 
 int main() {
     setup();
+        arrayMaker();
     randomizer();
-        battlefield();
+    battlefield();
         //BELOW TRYING TO EFFICIENCY
         //n = sprintf (buffer, %d %d %d %d %d, a1, a2, a3, a4, a5);
         //printf ("",buffer,n);
-
     Serial.flush();
         return 0;
     }
