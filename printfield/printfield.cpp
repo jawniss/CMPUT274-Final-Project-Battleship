@@ -411,6 +411,7 @@ void e5(){
 
 
 
+/*
 void hitormiss() {
   if (attackcoords == positionOfShip) {
     Serial.println("HIT");
@@ -421,18 +422,42 @@ void hitormiss() {
     attackcoords = "MISS";
   }
 }
+*/
 
 
 void inputs() {
+  Serial.println("Where you wanna attack");
   if (Serial.available()) {
     char attackcoords = Serial.read();
-    hitormiss();
+    Serial.print("The coordinates you input are: ");
+    Serial.println(attackcoords);
+    //hitormiss();
 
 
     }
   }
-}
 
+  void readString(char str[], int len) {
+  	// we didn't use a 'for' loop because we need the value of 'index' when
+  	// 'while' exits, so that we know where to add the null terminator '\0'
+
+  	int index = 0;
+  	while (index < len - 1) {
+  		// if something is waiting to be read on Serial0
+  		if (Serial.available() > 0) {
+  			char byteRead = Serial.read();
+  			// did the user press enter?
+  			if (byteRead == '\r') {
+  				break;
+  			}
+  			else {
+  				str[index] = byteRead;
+  				index += 1;
+  			}
+  		}
+  	}
+  	str[index] = '\0';
+  }
 
 
 
@@ -443,6 +468,8 @@ int main() {
         //BELOW TRYING TO EFFICIENCY
         //n = sprintf (buffer, %d %d %d %d %d, a1, a2, a3, a4, a5);
         //printf ("",buffer,n);
+        readString(str, 32);
+        Serial.print(byteRead);
     Serial.flush();
         return 0;
     }
