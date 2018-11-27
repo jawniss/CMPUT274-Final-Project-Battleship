@@ -409,6 +409,33 @@ void e5(){
 }
 */
 
+
+
+void hitormiss() {
+  if (attackcoords == positionOfShip) {
+    Serial.println("HIT");
+    attackcoords = "HIT";
+  }
+  else {
+    Serial.println("MISS");
+    attackcoords = "MISS";
+  }
+}
+
+
+void inputs() {
+  if (Serial.available()) {
+    char attackcoords = Serial.read();
+    hitormiss();
+
+
+    }
+  }
+}
+
+
+
+
 int main() {
     setup();
     randomizer();
