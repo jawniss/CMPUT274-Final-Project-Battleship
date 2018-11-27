@@ -12,7 +12,7 @@ void setup() {
 int shipLocation[5];
 int remainingShips = 5;
 //int shipLocation[4];
-int position[25];
+char position[25];
 /*
 int a1 = 0, a2 = 0, a3 = 0, a4 = 0, a5 = 0;
 int b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0;
@@ -22,7 +22,7 @@ int e1 = 0, e2 = 0, e3 = 0, e4 = 0, e5 = 0;
 */
 void arrayMaker(){
     for (int i = 0; i < 25; i++){
-        position[i] = 'X';
+        position[i] = '?';
     }
 }
 
@@ -77,9 +77,9 @@ void battlefield() {
 
 void battlefield() {
   Serial.println(  "Positioning: \n");
-    Serial.println(  " | ""  "  "0"  " |  "  "1"  " |  "  "2"  " | "  "3"  "  | "  "4"" | " );
+    Serial.println(  " | ""  "  "0"  " |  "  "1"  " |  "  "2"  " | "   "3"  "  | "  "4"" | " );
     Serial.println(  "-----------------------");
-    Serial.println(  " | ""  "  "5"  " |  "  "6"  " |  "  "7"  " | "  "8"  "  | "  "9"" | "  );
+    Serial.println(  " | ""  "  "5"  " |  "  "6"  " |  "  "7"  " | "   "8"  "  | "  "9"" | "  );
     Serial.println(  "-----------------------");
     Serial.println(  " | "" "  "10"  " | "  "11"  " | "  "12"  " | "  "13"  " | "  "14"" | " );
     Serial.println(  "-----------------------");
@@ -102,7 +102,7 @@ void battlefield() {
         Serial.print( " |  " );
         Serial.print((position[4]));
         Serial.println(" | ");
-    Serial.println(  "-----------------------");
+    Serial.println(  "---------------------------");
 
         Serial.print( " |  " );
         Serial.print((position[5]));
@@ -115,7 +115,7 @@ void battlefield() {
         Serial.print( " |  " );
         Serial.print((position[9]));
         Serial.println(" | ");
-    Serial.println(  "-----------------------");
+    Serial.println(  "---------------------------");
 
         Serial.print( " |  " );
         Serial.print((position[10]));
@@ -128,7 +128,7 @@ void battlefield() {
         Serial.print( " |  " );
         Serial.print((position[14]));
         Serial.println(" | ");
-    Serial.println(  "-----------------------");
+    Serial.println(  "---------------------------");
 
         Serial.print( " |  " );
         Serial.print((position[15]));
@@ -141,7 +141,7 @@ void battlefield() {
         Serial.print( " |  " );
         Serial.print((position[19]));
         Serial.println(" | ");
-    Serial.println(  "-----------------------");
+    Serial.println(  "---------------------------");
 
         Serial.print( " |  " );
         Serial.print((position[20]));
@@ -154,7 +154,7 @@ void battlefield() {
         Serial.print( " |  " );
         Serial.print((position[24]));
         Serial.println(" | ");
-    Serial.println(  "-----------------------");
+    Serial.println(  "-------------------------------");
 
 
         /*
