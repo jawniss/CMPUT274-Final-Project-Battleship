@@ -270,10 +270,11 @@ void a5(){
     a5 = "-";
   }
 }
-
+*/
 
 /*
-void hitOrMiss()
+
+void hitOrMiss(char attackcoords)
 {
     //First ship
     if (attackcoords == random_numbers[0])
@@ -367,6 +368,7 @@ void hitOrMiss()
 }
 */
 
+
 /*
 void inputs() {
   if (Serial.available()) {
@@ -381,14 +383,80 @@ void inputs() {
 
 
 
+void inputs() {
+  int u = 1;
+  char str[32];
+  int index;
+  int yesorno;
+  char ouinon[32];
+  Serial.println("Enter the coordinates you wish to attack below: ");
+  while (u == 1) {
+        // wait until some data has arrived
+    while (Serial.available() == 0) { }
+    char attackcoords = Serial.read();
+
+    if ((int) attackcoords == 13) {
+      Serial.println();
+      Serial.print("Your input is: ");
+      for (int o; o < index; o++) {
+        Serial.print(str[o]);
+      }
+      Serial.println();
+
+/*
+
+      Serial.print("Is this correct?: ");
+
+// trying to give user convenience of use - if they say no(change their
+// mind about their input), restart the function. if they say yes (that is
+// their desired input) continue on to hitOrMiss
+
+
+      while (i == 1) {
+        while (Serial.available() == 0) { }
+        char yesno = Serial.read();
+        if ((int) yesno == 13) {
+          Serial.println();
+          Serial.print("You said: ");
+          for (int poo; poo < yesorno; poo++) {
+            Serial.print(ouinon[yesorno]);
+          }
+          if (ouinon == "Yes" or *all variations of yes) {
+            i = 0;
+            u = 0;
+            break;
+          }
+          if (ouinon == "No" or variations of no) {
+            i = 0;
+            u = 1;
+            break;
+          }
+        }
+      }
+      */
+
+
+
+      u = 0;
+    }
+    else {
+        Serial.print(attackcoords);
+        str[index] = attackcoords;
+        index += 1;
+    }
+
+  }
+}
+
+
+
+
 int main() {
     setup();
-        arrayMaker();
+    arrayMaker();
     randomizer();
     battlefield();
-        //BELOW TRYING TO EFFICIENCY
-        //n = sprintf (buffer, %d %d %d %d %d, a1, a2, a3, a4, a5);
-        //printf ("",buffer,n);
+    inputs();
     Serial.flush();
         return 0;
     }
