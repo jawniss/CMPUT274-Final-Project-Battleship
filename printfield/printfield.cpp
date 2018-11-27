@@ -1,4 +1,5 @@
 #include <Arduino.h>
+//#include <ctime>
 
 const int Pin1 = 1;
 void setup() {
@@ -6,9 +7,10 @@ void setup() {
     init();
     Serial.begin(9600);
     Serial3.begin(9600);
+  randomSeed(analogRead(0)); // to randomize the seed
 }
-
-
+int shipLocation[5];
+//int shipLocation[4];
 int a1 = 0, a2 = 0, a3 = 0, a4 = 0, a5 = 0;
 int b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0;
 int c1 = 0, c2 = 0, c3 = 0, c4 = 0, c5 = 0;
@@ -89,6 +91,56 @@ void battlefield() {
     Serial.print(  " "  position[20]  "  | "  position[21]  "  | "  position[22]  "  | "  position[23]  "  | "  position[24]  );
   */
 }
+
+void randomizer() {
+    for (int i = 0; i<5; i++) {
+        bool checkUnique; //variable to checkUnique or number is already used
+        int n; //variable to store the number in
+        do {
+      n = random(0,24);
+            //checkUnique or number is already used:
+            checkUnique = true;
+            for (int j = 0; j<i; j++)
+                if (n == shipLocation[j]) //if number is already used
+                {
+                    checkUnique = false; //set checkUnique to false
+                    break; //no need to checkUnique the other elements of value[]
+                }
+        } while (checkUnique == false); //loop until new, unique number is found
+        shipLocation[i] = n; //store the generated number in the array
+    }
+  shipLocation[5] = random(0,24);
+    for (int i = 0; i < 5; i++) //Just to see the random numbers
+    {
+    Serial.println((shipLocation[i]));
+    }
+}
+
+/*
+void randomizer(){
+  //srand(time(NULL));
+  int checkUniqueUnique;
+  int genNumber;
+  for (int i = 0; i<5; i++){
+    //genNumber = rand()%24;
+    genNumber = random(0,24);
+    checkUniqueUnique = 1;
+    for (int j = 0; j<i; j++ ){
+      if (genNumber == shipLocation[j]){
+        checkUniqueUnique = 0;
+        break;
+      } while (checkUniqueUnique == 0);
+      shipLocation[i] = genNumber;
+    }
+  }
+  for (int i = 0; i < 5; i++) //Just to see the random numbers^^
+    {
+        Serial.println((shipLocation[i]));
+    }
+}
+*/
+
+
 /*
 void a1(){
   if (a1 == positionOfShip){
@@ -359,6 +411,7 @@ void e5(){
 
 int main() {
     setup();
+    randomizer();
         battlefield();
         //BELOW TRYING TO EFFICIENCY
         //n = sprintf (buffer, %d %d %d %d %d, a1, a2, a3, a4, a5);
