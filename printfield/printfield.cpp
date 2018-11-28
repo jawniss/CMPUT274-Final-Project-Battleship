@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include "read_int.h"
 //#include <ctime>
 
 const int Pin1 = 1;
@@ -526,6 +527,41 @@ void inputs() {
 */
 
 
+
+void inputs(char str[], int len) {
+  Serial.print("Enter the coordinates: ");
+	int index = 0;
+	while (index < len - 1) {
+		// if something is waiting to be read on Serial0
+		if (Serial.available() > 0) {
+			char attackcoords = Serial.read();
+			// did the user press enter?
+			if (attackcoords == '\r') {
+				break;
+			}
+			else {
+				Serial.print(attackcoords);
+				str[index] = attackcoords;
+				index += 1;
+			}
+		}
+	}
+	str[index] = '\0';
+}
+
+uint32_t theirinput() {
+	char str[32];
+	inputs(str, 32);
+  Serial.println();
+  Serial.print("Attacking ");
+  int o = atol(str);
+  Serial.print(o);
+  Serial.println(" ...");
+	return atol(str);
+}
+
+
+
 int main() {
     setup();
         arrayMaker();
@@ -538,6 +574,12 @@ int main() {
         //n = sprintf (buffer, %d %d %d %d %d, a1, a2, a3, a4, a5);
         //printf ("",buffer,n);
         //inputs();
+        int coordinates = theirinput();
+        /*
+        Serial.println();
+        Serial.print("Coordinates: ");
+        Serial.println(coordinates);
+        */
     Serial.flush();
         return 0;
     }

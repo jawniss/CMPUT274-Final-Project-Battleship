@@ -8,4 +8,5 @@ build-mega2560/printfield.o: printfield.cpp \
  /usr/share/arduino/hardware/arduino//cores/arduino/Print.h \
  /usr/share/arduino/hardware/arduino//cores/arduino/Printable.h \
  /usr/share/arduino/hardware/arduino//cores/arduino/new.h \
- /usr/share/arduino/hardware/arduino//variants/mega/pins_arduino.h
+ /usr/share/arduino/hardware/arduino//variants/mega/pins_arduino.h \
+ read_int.h
