@@ -7,13 +7,55 @@ void setup() {
     init();
     Serial.begin(9600);
     Serial3.begin(9600);
-  randomSeed(analogRead(0)); // to randomize the seed
+    randomSeed(analogRead(0)); // to randomize the seed for random
 }
 int shipLocation[5];
 int botshipLocation[5];
 int remainingShips = 5;
 //int shipLocation[4];
 char position[25];
+char yourPosition[25];
+
+void yourArray(){
+    for (int i = 0; i<5; i++) {
+            bool checkUnique2; //variable to checkUnique or number is already used
+            int n; //variable to store the number in
+            do {
+        n = random(0,24);
+                    //checkUnique or number is already used:
+                    checkUnique2 = true;
+                    for (int j = 0; j<i; j++)
+                            if (n == botshipLocation[j]) //if number is already used
+                            {
+                                    checkUnique2 = false; //set checkUnique to false
+                                    break; //no need to checkUnique the other elements of value[]
+                            }
+            } while (checkUnique2 == false); //loop until new, unique number is found
+            botshipLocation[i] = n; //store the generated number in the array
+    }
+botshipLocation[5] = random(0,24);
+    Serial.println("your ships");
+    for (int i = 0; i < 5; i++) //Just to see the random numbers
+    {
+    Serial.println((botshipLocation[i]));
+    }
+
+    for (int i = 0; i < 25; i++){
+        if (i == botshipLocation[0]){
+            yourPosition[i] = 'O';
+        } else if (i == botshipLocation[1]){
+            yourPosition[i] = 'O';
+        } else if (i == botshipLocation[2]){
+            yourPosition[i] = 'O';
+        } else if (i == botshipLocation[3]){
+            yourPosition[i] = 'O';
+        } else if (i == botshipLocation[4]){
+            yourPosition[i] = 'O';
+        } else {
+            yourPosition[i] = '?';
+        }
+    }
+}
 
 void arrayMaker(){
     for (int i = 0; i < 25; i++){
@@ -46,7 +88,7 @@ void battlefield() {
 
         Serial.print(    "Your opponents field: ");
         Serial.print(remainingShips);
-        Serial.println(" their ships left!");
+        Serial.println(" their ships left!                                  your current remainingShips");
 
     Serial.print( " |  " );
         Serial.print((position[0]));
@@ -58,7 +100,22 @@ void battlefield() {
         Serial.print((position[3]));
         Serial.print( " |  " );
         Serial.print((position[4]));
+        Serial.print(" | ");
+        Serial.print("                                              ");
+        Serial.print( " |  " );
+        Serial.print((yourPosition[0]));
+        Serial.print( " |  " );
+        Serial.print((yourPosition[1]));
+        Serial.print( " |  " );
+        Serial.print((yourPosition[2]));
+        Serial.print( " |  " );
+        Serial.print((yourPosition[3]));
+        Serial.print( " |  " );
+        Serial.print((yourPosition[4]));
         Serial.println(" | ");
+
+        Serial.print(  "---------------------------");
+        Serial.print("                                                ");
     Serial.println(  "---------------------------");
 
         Serial.print( " |  " );
@@ -71,7 +128,22 @@ void battlefield() {
         Serial.print((position[8]));
         Serial.print( " |  " );
         Serial.print((position[9]));
+        Serial.print(" | ");
+        Serial.print("                                              ");
+        Serial.print( " |  " );
+        Serial.print((yourPosition[5]));
+        Serial.print( " |  " );
+        Serial.print((yourPosition[6]));
+        Serial.print( " |  " );
+        Serial.print((yourPosition[7]));
+        Serial.print( " |  " );
+        Serial.print((yourPosition[8]));
+        Serial.print( " |  " );
+        Serial.print((yourPosition[9]));
         Serial.println(" | ");
+
+        Serial.print(  "---------------------------");
+        Serial.print("                                                ");
     Serial.println(  "---------------------------");
 
         Serial.print( " |  " );
@@ -84,7 +156,22 @@ void battlefield() {
         Serial.print((position[13]));
         Serial.print( " |  " );
         Serial.print((position[14]));
+        Serial.print(" | ");
+        Serial.print("                                              ");
+        Serial.print( " |  " );
+        Serial.print((yourPosition[10]));
+        Serial.print( " |  " );
+        Serial.print((yourPosition[11]));
+        Serial.print( " |  " );
+        Serial.print((yourPosition[12]));
+        Serial.print( " |  " );
+        Serial.print((yourPosition[13]));
+        Serial.print( " |  " );
+        Serial.print((yourPosition[14]));
         Serial.println(" | ");
+
+        Serial.print(  "---------------------------");
+        Serial.print("                                                ");
     Serial.println(  "---------------------------");
 
         Serial.print( " |  " );
@@ -97,7 +184,22 @@ void battlefield() {
         Serial.print((position[18]));
         Serial.print( " |  " );
         Serial.print((position[19]));
+        Serial.print(" | ");
+        Serial.print("                                              ");
+        Serial.print( " |  " );
+        Serial.print((yourPosition[15]));
+        Serial.print( " |  " );
+        Serial.print((yourPosition[16]));
+        Serial.print( " |  " );
+        Serial.print((yourPosition[17]));
+        Serial.print( " |  " );
+        Serial.print((yourPosition[18]));
+        Serial.print( " |  " );
+        Serial.print((yourPosition[19]));
         Serial.println(" | ");
+
+        Serial.print(  "---------------------------");
+        Serial.print("                                                ");
     Serial.println(  "---------------------------");
 
         Serial.print( " |  " );
@@ -110,7 +212,22 @@ void battlefield() {
         Serial.print((position[23]));
         Serial.print( " |  " );
         Serial.print((position[24]));
+        Serial.print(" | ");
+        Serial.print("                                              ");
+        Serial.print( " |  " );
+        Serial.print((yourPosition[20]));
+        Serial.print( " |  " );
+        Serial.print((yourPosition[21]));
+        Serial.print( " |  " );
+        Serial.print((yourPosition[22]));
+        Serial.print( " |  " );
+        Serial.print((yourPosition[23]));
+        Serial.print( " |  " );
+        Serial.print((yourPosition[24]));
         Serial.println(" | ");
+
+        Serial.print(  "---------------------------");
+        Serial.print("                                                ");
     Serial.println(  "---------------------------");
 
 
@@ -139,7 +256,7 @@ void randomizer() {
     Serial.println((shipLocation[i]));
     }
 }
-
+/*
 void computerRandomizer() {
     for (int i = 0; i<5; i++) {
         bool checkUnique2; //variable to checkUnique or number is already used
@@ -163,7 +280,7 @@ void computerRandomizer() {
     Serial.println((botshipLocation[i]));
     }
 }
-
+*/
 /*
 void bot(){
 
@@ -251,10 +368,9 @@ void a5(){
 */
 
 /*
-void hitOrMiss()
-{
+void hitOrMiss() {
     //First ship
-    if (attackcoords == random_numbers[0])
+    if (attackcoords == shipLocation[0])
     {
         //remainingShips--;
         position[attackcoords] = 'X';
@@ -270,7 +386,7 @@ void hitOrMiss()
         }
     }
     // Second ship
-    else if (attackcoords == random_numbers[1])
+    else if (attackcoords == shipLocation[1])
     {
         //remainingShips--;
         position[attackcoords] = 'X';
@@ -286,7 +402,7 @@ void hitOrMiss()
         }
     }
     //Third ship
-    else if (attackcoords == random_numbers[2])
+    else if (attackcoords == shipLocation[2])
     {
         //remainingShips--;
         position[attackcoords] = 'X';
@@ -302,7 +418,7 @@ void hitOrMiss()
         }
     }
     //Forth ship
-    else if (attackcoords == random_numbers[3])
+    else if (attackcoords == shipLocation[3])
     {
         //remainingShips--;
         position[attackcoords] = 'X';
@@ -318,7 +434,7 @@ void hitOrMiss()
         }
     }
     //Fith ship
-    else if (attackcoords == random_numbers[4])
+    else if (attackcoords == shipLocation[4])
     {
         //remainingShips--;
         position[attackcoords] = 'X';
@@ -345,6 +461,8 @@ void hitOrMiss()
 }
 */
 
+
+/*
 void inputs() {
   int u = 1;
   char str[32];
@@ -395,10 +513,6 @@ void inputs() {
           }
         }
       }
-      */
-
-
-
       u = 0;
     }
     else {
@@ -409,19 +523,21 @@ void inputs() {
 
   }
 }
-
+*/
 
 
 int main() {
     setup();
         arrayMaker();
     randomizer();
-        computerRandomizer();
+        Serial.println();
+        //computerRandomizer();
+        yourArray();
     battlefield();
         //BELOW TRYING TO EFFICIENCY
         //n = sprintf (buffer, %d %d %d %d %d, a1, a2, a3, a4, a5);
         //printf ("",buffer,n);
-        inputs();
+        //inputs();
     Serial.flush();
         return 0;
     }
