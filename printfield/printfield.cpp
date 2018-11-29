@@ -368,13 +368,13 @@ void a5(){
 }
 */
 
-/*
-void hitOrMiss() {
+
+void hitOrMiss(int coordinates) {
     //First ship
-    if (attackcoords == shipLocation[0])
+    if (coordinates == shipLocation[0])
     {
         //remainingShips--;
-        position[attackcoords] = 'X';
+        position[coordinates] = 'X';
         battlefield();
         Serial.println("Hit a ship");
         remainingShips = (remainingShips - 1);
@@ -387,10 +387,10 @@ void hitOrMiss() {
         }
     }
     // Second ship
-    else if (attackcoords == shipLocation[1])
+    else if (coordinates == shipLocation[1])
     {
         //remainingShips--;
-        position[attackcoords] = 'X';
+        position[coordinates] = 'X';
         battlefield();
         Serial.println("Hit a ship");
         remainingShips = (remainingShips - 1);
@@ -403,10 +403,10 @@ void hitOrMiss() {
         }
     }
     //Third ship
-    else if (attackcoords == shipLocation[2])
+    else if (coordinates == shipLocation[2])
     {
         //remainingShips--;
-        position[attackcoords] = 'X';
+        position[coordinates] = 'X';
         battlefield();
         Serial.println("Hit a ship");
         remainingShips = (remainingShips - 1);
@@ -419,10 +419,10 @@ void hitOrMiss() {
         }
     }
     //Forth ship
-    else if (attackcoords == shipLocation[3])
+    else if (coordinates == shipLocation[3])
     {
         //remainingShips--;
-        position[attackcoords] = 'X';
+        position[coordinates] = 'X';
         battlefield();
         Serial.println("Hit a ship");
         remainingShips = (remainingShips - 1);
@@ -435,10 +435,10 @@ void hitOrMiss() {
         }
     }
     //Fith ship
-    else if (attackcoords == shipLocation[4])
+    else if (coordinates == shipLocation[4])
     {
         //remainingShips--;
-        position[attackcoords] = 'X';
+        position[coordinates] = 'X';
         battlefield();
         Serial.println("Hit a ship");
         remainingShips = (remainingShips - 1);
@@ -452,7 +452,7 @@ void hitOrMiss() {
     }
     else
     {
-        position[attackcoords] = '-';
+        position[coordinates] = '-';
         //system("CLS");
         battlefield();
         Serial.println("You did not hit a ship!");
@@ -460,7 +460,7 @@ void hitOrMiss() {
         //setup_done = true;
     }
 }
-*/
+
 
 
 /*
@@ -575,6 +575,7 @@ int main() {
         //printf ("",buffer,n);
         //inputs();
         int coordinates = theirinput();
+        hitOrMiss(coordinates);
         /*
         Serial.println();
         Serial.print("Coordinates: ");
