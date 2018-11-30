@@ -17,6 +17,9 @@ int yourRemainingShips = 5;
 char position[25];
 char yourPosition[25];
 int botPath[25] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};
+int game = 1;
+int turnCount = 0;
+int move = 0;
 
 void randomizer() {
         int i;
@@ -312,7 +315,9 @@ void hitOrMiss(int coordinates) {
         position[coordinates] = 'X';
         remainingShips = (remainingShips - 1);
 				battlefield();
-        Serial.println("Hit a ship");
+				Serial.print("You attacked position  ");
+				Serial.println(coordinates);
+        Serial.println("You hit a ship");
 				Serial.println(  "---------------------------");
         if (remainingShips == 0)//checks whether all ships were hit
         {
@@ -320,6 +325,7 @@ void hitOrMiss(int coordinates) {
             //valid_input = true;
             //setup_done = false;
          Serial.println("You hit all the ships you win !");
+				 game = 0;
         }
     }
     // Second ship
@@ -329,7 +335,9 @@ void hitOrMiss(int coordinates) {
         position[coordinates] = 'X';
         remainingShips = (remainingShips - 1);
 				battlefield();
-        Serial.println("Hit a ship");
+				Serial.print("You attacked position  ");
+				Serial.println(coordinates);
+        Serial.println("You hit a ship");
 				Serial.println(  "---------------------------");
         if (remainingShips == 0)//checks whether all ships were hit
         {
@@ -337,6 +345,7 @@ void hitOrMiss(int coordinates) {
             //valid_input = true;
             //setup_done = false;
          Serial.println("You hit all the ships you win !");
+				 game = 0;
         }
     }
     //Third ship
@@ -346,7 +355,9 @@ void hitOrMiss(int coordinates) {
         position[coordinates] = 'X';
         remainingShips = (remainingShips - 1);
 				battlefield();
-        Serial.println("Hit a ship");
+				Serial.print("You attacked position  ");
+				Serial.println(coordinates);
+        Serial.println("You hit a ship");
 				Serial.println(  "---------------------------");
         if (remainingShips == 0)//checks whether all ships were hit
         {
@@ -354,6 +365,7 @@ void hitOrMiss(int coordinates) {
             //valid_input = true;
             //setup_done = false;
          Serial.println("You hit all the ships you win !");
+				 game = 0;
         }
     }
     //Forth ship
@@ -363,7 +375,9 @@ void hitOrMiss(int coordinates) {
         position[coordinates] = 'X';
         remainingShips = (remainingShips - 1);
 				battlefield();
-        Serial.println("Hit a ship");
+				Serial.print("You attacked position  ");
+				Serial.println(coordinates);
+        Serial.println("You hit a ship");
 				Serial.println(  "---------------------------");
         if (remainingShips == 0)//checks whether all ships were hit
         {
@@ -371,6 +385,7 @@ void hitOrMiss(int coordinates) {
             //valid_input = true;
             //setup_done = false;
          Serial.println("You hit all the ships you win !");
+				 game = 0;
         }
     }
     //Fith ship
@@ -380,7 +395,9 @@ void hitOrMiss(int coordinates) {
         position[coordinates] = 'X';
         remainingShips = (remainingShips - 1);
 				battlefield();
-        Serial.println("Hit a ship");
+				Serial.print("You attacked position  ");
+				Serial.println(coordinates);
+        Serial.println("You hit a ship");
 				Serial.println(  "---------------------------");
         if (remainingShips == 0)//checks whether all ships were hit
         {
@@ -388,12 +405,15 @@ void hitOrMiss(int coordinates) {
             //valid_input = true;
             //setup_done = false;
          Serial.println("You hit all the ships you win !");
+				 game = 0;
         }
     }
     else
     {
         position[coordinates] = '-';
         battlefield();
+				Serial.print("You attacked position  ");
+				Serial.println(coordinates);
         Serial.println("You did not hit a ship!");
 				Serial.println(  "---------------------------");
     }
@@ -409,8 +429,7 @@ void botHitOrMiss() {
       Serial.println(shipLocation[3]);
       Serial.println(shipLocation[4]);
       */
-
-      for (int i = 0; i < 25; i++){
+      for (int i = move; i < 25; i++){
 
           if (botPath[i] == botshipLocation[0])
           {
@@ -419,12 +438,17 @@ void botHitOrMiss() {
           //position[coordinates] = 'X';
           yourRemainingShips = (yourRemainingShips - 1);
   				battlefield();
+					Serial.print("Your opponent attacked ");
+					Serial.println(placeholder);
           Serial.println("Your ship was hit");
   				Serial.println(  "---------------------------");
+					move++;
+					break;
           if (yourRemainingShips == 0)//checks whether all ships were hit
           {
             battlefield();
             Serial.println("You lost all your ships you lose ");
+						game = 0;
             break;
           }
       }
@@ -436,12 +460,17 @@ void botHitOrMiss() {
         //position[coordinates] = 'X';
         yourRemainingShips = (yourRemainingShips - 1);
         battlefield();
+				Serial.print("Your opponent attacked ");
+				Serial.println(placeholder);
         Serial.println("Your ship was hit");
         Serial.println(  "---------------------------");
+				move++;
+				break;
         if (yourRemainingShips == 0)//checks whether all ships were hit
         {
           battlefield();
           Serial.println("You lost all your ships you lose ");
+					game = 0;
           break;
         }
       }
@@ -453,12 +482,17 @@ void botHitOrMiss() {
         //position[coordinates] = 'X';
         yourRemainingShips = (yourRemainingShips - 1);
         battlefield();
+				Serial.print("Your opponent attacked ");
+				Serial.println(placeholder);
         Serial.println("Your ship was hit");
         Serial.println(  "---------------------------");
+				move++;
+				break;
         if (yourRemainingShips == 0)//checks whether all ships were hit
         {
           battlefield();
           Serial.println("You lost all your ships you lose ");
+					game = 0;
           break;
         }
       }
@@ -470,12 +504,17 @@ void botHitOrMiss() {
         //position[coordinates] = 'X';
         yourRemainingShips = (yourRemainingShips - 1);
         battlefield();
+				Serial.print("Your opponent attacked ");
+				Serial.println(placeholder);
         Serial.println("Your ship was hit");
         Serial.println(  "---------------------------");
+				move++;
+				break;
         if (yourRemainingShips == 0)//checks whether all ships were hit
         {
           battlefield();
           Serial.println("You lost all your ships you lose ");
+					game = 0;
           break;
         }
       }
@@ -487,12 +526,17 @@ void botHitOrMiss() {
         //position[coordinates] = 'X';
         yourRemainingShips = (yourRemainingShips - 1);
         battlefield();
+				Serial.print("Your opponent attacked ");
+				Serial.println(placeholder);
         Serial.println("Your ship was hit");
         Serial.println(  "---------------------------");
+				move++;
+				break;
         if (yourRemainingShips == 0)//checks whether all ships were hit
         {
           battlefield();
           Serial.println("You lost all your ships you lose ");
+					game = 0;
           break;
         }
       }
@@ -501,12 +545,15 @@ void botHitOrMiss() {
           int placeholder = botPath[i];
           yourPosition[placeholder] = '-';
           battlefield();
+					Serial.print("Your opponent attacked ");
+					Serial.println(placeholder);
           Serial.println("Your opponent did not hit a ship!");
   				Serial.println(  "---------------------------");
+					move++;
+					break;
       }
     }
 }
-
 
 
 /*
@@ -615,31 +662,38 @@ int main() {
 				computerRandomizer(); //randomize your ship locations
 				aiPath(); // order the AI will play each turn
         yourInitialArray(); // initial array
-        botHitOrMiss();
         battlefield();
+				Serial.print("this is game ");
+				Serial.println(game);
 
-
-        //BELOW TRYING TO EFFICIENCY
-        //n = sprintf (buffer, %d %d %d %d %d, a1, a2, a3, a4, a5);
-        //printf ("",buffer,n);
-        //inputs();
-        int coordinates1 = theirinput();
-        hitOrMiss(coordinates1);
-                int coordinates2 = theirinput();
-        hitOrMiss(coordinates2);
-                int coordinates3 = theirinput();
-        hitOrMiss(coordinates3);
-                int coordinates4 = theirinput();
-        hitOrMiss(coordinates4);
-                int coordinates5 = theirinput();
-        hitOrMiss(coordinates5);
-
-
+				while (game == 1){
+					Serial.println("looping");
+					turnCount++;
+					Serial.println(turnCount);
+					if (turnCount%2 == 1){ //on odd turns you go
+		        int coordinates = theirinput();
+		        hitOrMiss(coordinates);
+						/*
+		        int coordinates2 = theirinput();
+		        hitOrMiss(coordinates2);
+		        int coordinates3 = theirinput();
+		        hitOrMiss(coordinates3);
+		        int coordinates4 = theirinput();
+		        hitOrMiss(coordinates4);
+		        int coordinates5 = theirinput();
+		        hitOrMiss(coordinates5);
+						*/
+				} else if (turnCount%2 == 0){ // on even turns so opponent goes
+					//int i == 0;
+					botHitOrMiss();
+					//i++;
+				}
         /*
         Serial.println();
         Serial.print("Coordinates: ");
         Serial.println(coordinates);
         */
+			}
     Serial.flush();
         return 0;
     }
