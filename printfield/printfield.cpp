@@ -13,50 +13,126 @@ void setup() {
 int shipLocation[5];
 int botshipLocation[5];
 int remainingShips = 5;
-//int shipLocation[4];
 char position[25];
 char yourPosition[25];
+int botPath[25] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};
 
-void yourArray(){
-    for (int i = 0; i<5; i++) {
-            bool checkUnique2; //variable to checkUnique or number is already used
-            int n; //variable to store the number in
+void randomizer() {
+        int i;
+        int j;
+        bool checkUnique; //variable to checkUnique or number is already used
+        int n; //variable to store the number in
+    for (i = 0; i<5; i++)
+        {
+            n = random(0,24);
+        //checkUnique or number is already used:
+        checkUnique = true;
+        for (j = 0; j<i; j++)
+                {
+            if (n == shipLocation[j]) //if number is already used
             {
-        n = random(0,24);
-
-                    //checkUnique or number is already used:
-                    checkUnique2 = true;
-                    for (int j = 0; j<i; j++)
-                            if (n == botshipLocation[j]) //if number is already used
-                            {
-                              checkUnique2 = false; //set checkUnique to false
-                              break; //no need to checkUnique the other elements of value[]
-                            }
-            } while (checkUnique2 == false); //loop until new, unique number is found
-            botshipLocation[i] = n; //store the generated number in the array
+                checkUnique = false; //set checkUnique to false
+                break; //no need to checkUnique the other elements of value[]
+            }
+                }
+                if (checkUnique == true) //loop until new, unique number is found
+                {
+                        shipLocation[i] = n; //store the generated number in the array
+                }
     }
-//botshipLocation[5] = random(0,24);
-    Serial.println("your ships");
-    for (int i = 0; i < 5; i++) //Just to see the random numbers
+    // shipLocation[5] = random(0,24);
+    for (i = 0; i < 5; i++) //Just to see the random numbers
     {
-    Serial.println((botshipLocation[i]));
+                Serial.print("this is opponents ships ");
+                Serial.print(i);
+                Serial.print(" ");
+            Serial.println((shipLocation[i]));
     }
+}
 
-    for (int i = 0; i < 25; i++){
-        if (i == botshipLocation[0]){
-            yourPosition[i] = 'O';
-        } else if (i == botshipLocation[1]){
-            yourPosition[i] = 'O';
-        } else if (i == botshipLocation[2]){
-            yourPosition[i] = 'O';
-        } else if (i == botshipLocation[3]){
-            yourPosition[i] = 'O';
-        } else if (i == botshipLocation[4]){
-            yourPosition[i] = 'O';
-        } else {
-            yourPosition[i] = '?';
-        }
-    }
+void computerRandomizer() {
+	for (int i = 0; i<5; i++) {
+					bool checkUnique2; //variable to checkUnique or number is already used
+					int n; //variable to store the number in
+					{
+			n = random(0,24);
+			//checkUnique or number is already used:
+			checkUnique2 = true;
+			for (int j = 0; j<i; j++)
+							if (n == botshipLocation[j]) //if number is already used
+							{
+								checkUnique2 = false; //set checkUnique to false
+								break; //no need to checkUnique the other elements of value[]
+							}
+			} while (checkUnique2 == false); //loop until new, unique number is found
+			botshipLocation[i] = n; //store the generated number in the array
+	}
+
+	for (int i = 0; i < 5; i++) //Just to see the random numbers
+	{
+	Serial.print("this is your ships ");
+	Serial.print(i);
+	Serial.print(" ");
+	Serial.println((botshipLocation[i]));
+	}
+	Serial.println();
+}
+
+/*
+void computer(){
+
+
+}
+*/
+
+void aiPath(){
+
+	const int Count = sizeof(botPath) / sizeof(botPath[0]);
+	for (int i=0; i < Count; i++) {
+	   int n = random(0, Count);  // Integer from 0 to questionCount-1
+	   int temp = botPath[n]; // temporary
+	   botPath[n] =  botPath[i]; // random postion gets assigned
+	   botPath[i] = temp;
+	}
+	for (int i = 0; i < 25; i++) //Just to see the random numbers
+	{
+		Serial.print("this is ai path ");
+		Serial.print(i);
+		Serial.print(" ");
+		Serial.println((botPath[i]));
+		}
+		Serial.println();
+}
+
+
+
+void yourInitialArray(){
+	//computerRandomizer();
+	/*
+	for (int i = 0; i < 5; i++) //Just to see the random numbers
+	{
+	Serial.print("this is your ships ");
+	Serial.print(i);
+	Serial.print(" ");
+	Serial.println((botshipLocation[i]));
+	}
+	Serial.println();
+	*/
+  for (int i = 0; i < 25; i++){
+      if (i == botshipLocation[0]){
+          yourPosition[i] = 'O';
+      } else if (i == botshipLocation[1]){
+          yourPosition[i] = 'O';
+      } else if (i == botshipLocation[2]){
+          yourPosition[i] = 'O';
+      } else if (i == botshipLocation[3]){
+          yourPosition[i] = 'O';
+      } else if (i == botshipLocation[4]){
+          yourPosition[i] = 'O';
+      } else {
+          yourPosition[i] = '?';
+      }
+  }
 }
 
 void arrayMaker(){
@@ -64,15 +140,6 @@ void arrayMaker(){
         position[i] = '?';
     }
 }
-
-/*
-COULD TRY
-char a1 = X
-    maybe before error was char a1 = "x"
-  not valid because strings are different from chars?
-*/
-
-
 
 
 
@@ -87,6 +154,7 @@ void battlefield() {
     Serial.println(  " | "" "  "15"  " | "  "16"  " | "  "17"  " | "  "18"  " | "  "19"" | " );
     Serial.println(  "---------------------------");
     Serial.println(  " | "" "  "20"  " | "  "21"  " | "  "22"  " | "  "23"  " | "  "24"" | " );
+		Serial.println("\n");
 
         Serial.print(    "Your opponents field: ");
         Serial.print(remainingShips);
@@ -235,92 +303,6 @@ void battlefield() {
 
 }
 
-void randomizer() {
-        int i;
-        int j;
-        bool checkUnique; //variable to checkUnique or number is already used
-        int n; //variable to store the number in
-    for (i = 0; i<5; i++)
-        {
-            n = random(0,24);
-        //checkUnique or number is already used:
-        checkUnique = true;
-        for (j = 0; j<i; j++)
-                {
-            if (n == shipLocation[j]) //if number is already used
-            {
-                checkUnique = false; //set checkUnique to false
-                break; //no need to checkUnique the other elements of value[]
-            }
-                }
-                if (checkUnique == true) //loop until new, unique number is found
-                {
-                        shipLocation[i] = n; //store the generated number in the array
-                }
-    }
-    // shipLocation[5] = random(0,24);
-    for (i = 0; i < 5; i++) //Just to see the random numbers
-    {
-                Serial.print("this is ");
-                Serial.print(i);
-                Serial.print(" ");
-            Serial.println((shipLocation[i]));
-    }
-}
-/*
-void computerRandomizer() {
-    for (int i = 0; i<5; i++) {
-        bool checkUnique2; //variable to checkUnique or number is already used
-        int n; //variable to store the number in
-        do {
-      n = random(0,24);
-            //checkUnique or number is already used:
-            checkUnique2 = true;
-            for (int j = 0; j<i; j++)
-                if (n == botshipLocation[j]) //if number is already used
-                {
-                    checkUnique2 = false; //set checkUnique to false
-                    break; //no need to checkUnique the other elements of value[]
-                }
-        } while (checkUnique2 == false); //loop until new, unique number is found
-        botshipLocation[i] = n; //store the generated number in the array
-    }
-  botshipLocation[5] = random(0,24);
-    for (int i = 0; i < 5; i++) //Just to see the random numbers
-    {
-    Serial.println((botshipLocation[i]));
-    }
-}
-*/
-/*
-void bot(){
-
-}
-*/
-
-/*
-void randomizer(){
-  //srand(time(NULL));
-  int checkUniqueUnique;
-  int genNumber;
-  for (int i = 0; i<5; i++){
-    //genNumber = rand()%24;
-    genNumber = random(0,24);
-    checkUniqueUnique = 1;
-    for (int j = 0; j<i; j++ ){
-      if (genNumber == shipLocation[j]){
-        checkUniqueUnique = 0;
-        break;
-      } while (checkUniqueUnique == 0);
-      shipLocation[i] = genNumber;
-    }
-  }
-  for (int i = 0; i < 5; i++) //Just to see the random numbers^^
-    {
-        Serial.println((shipLocation[i]));
-    }
-}
-*/
 
 
 /*
@@ -390,9 +372,10 @@ void hitOrMiss(int coordinates) {
     {
         //remainingShips--;
         position[coordinates] = 'X';
-        battlefield();
-        Serial.println("Hit a ship");
         remainingShips = (remainingShips - 1);
+				battlefield();
+        Serial.println("Hit a ship");
+				Serial.println(  "---------------------------");
         if (remainingShips == 0)//checks whether all ships were hit
         {
             battlefield();
@@ -406,9 +389,10 @@ void hitOrMiss(int coordinates) {
     {
         //remainingShips--;
         position[coordinates] = 'X';
-        battlefield();
-        Serial.println("Hit a ship");
         remainingShips = (remainingShips - 1);
+				battlefield();
+        Serial.println("Hit a ship");
+				Serial.println(  "---------------------------");
         if (remainingShips == 0)//checks whether all ships were hit
         {
             battlefield();
@@ -422,9 +406,10 @@ void hitOrMiss(int coordinates) {
     {
         //remainingShips--;
         position[coordinates] = 'X';
-        battlefield();
-        Serial.println("Hit a ship");
         remainingShips = (remainingShips - 1);
+				battlefield();
+        Serial.println("Hit a ship");
+				Serial.println(  "---------------------------");
         if (remainingShips == 0)//checks whether all ships were hit
         {
             battlefield();
@@ -438,9 +423,10 @@ void hitOrMiss(int coordinates) {
     {
         //remainingShips--;
         position[coordinates] = 'X';
-        battlefield();
-        Serial.println("Hit a ship");
         remainingShips = (remainingShips - 1);
+				battlefield();
+        Serial.println("Hit a ship");
+				Serial.println(  "---------------------------");
         if (remainingShips == 0)//checks whether all ships were hit
         {
             battlefield();
@@ -454,9 +440,10 @@ void hitOrMiss(int coordinates) {
     {
         //remainingShips--;
         position[coordinates] = 'X';
-        battlefield();
-        Serial.println("Hit a ship");
         remainingShips = (remainingShips - 1);
+				battlefield();
+        Serial.println("Hit a ship");
+				Serial.println(  "---------------------------");
         if (remainingShips == 0)//checks whether all ships were hit
         {
             battlefield();
@@ -468,11 +455,9 @@ void hitOrMiss(int coordinates) {
     else
     {
         position[coordinates] = '-';
-        //system("CLS");
         battlefield();
         Serial.println("You did not hit a ship!");
-        //valid_input = false;
-        //setup_done = true;
+				Serial.println(  "---------------------------");
     }
 }
 
@@ -578,12 +563,15 @@ uint32_t theirinput() {
 
 
 int main() {
-                setup();
-                arrayMaker();
-                randomizer();
-                //computerRandomizer();
-                yourArray();
-                battlefield();
+        setup();
+        arrayMaker(); //initial battlefield display
+        randomizer(); //randomize opponents ship locations
+				computerRandomizer(); //randomize your ship locations
+				aiPath(); // order the AI will play each turn
+        yourInitialArray(); // initial array
+
+        battlefield();
+
 
         //BELOW TRYING TO EFFICIENCY
         //n = sprintf (buffer, %d %d %d %d %d, a1, a2, a3, a4, a5);
@@ -599,6 +587,7 @@ int main() {
         hitOrMiss(coordinates4);
                 int coordinates5 = theirinput();
         hitOrMiss(coordinates5);
+
 
         /*
         Serial.println();
