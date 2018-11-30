@@ -21,20 +21,21 @@ void yourArray(){
     for (int i = 0; i<5; i++) {
             bool checkUnique2; //variable to checkUnique or number is already used
             int n; //variable to store the number in
-            do {
+            {
         n = random(0,24);
+
                     //checkUnique or number is already used:
                     checkUnique2 = true;
                     for (int j = 0; j<i; j++)
                             if (n == botshipLocation[j]) //if number is already used
                             {
-                                    checkUnique2 = false; //set checkUnique to false
-                                    break; //no need to checkUnique the other elements of value[]
+                              checkUnique2 = false; //set checkUnique to false
+                              break; //no need to checkUnique the other elements of value[]
                             }
             } while (checkUnique2 == false); //loop until new, unique number is found
             botshipLocation[i] = n; //store the generated number in the array
     }
-botshipLocation[5] = random(0,24);
+//botshipLocation[5] = random(0,24);
     Serial.println("your ships");
     for (int i = 0; i < 5; i++) //Just to see the random numbers
     {
@@ -235,26 +236,35 @@ void battlefield() {
 }
 
 void randomizer() {
-    for (int i = 0; i<5; i++) {
+        int i;
+        int j;
         bool checkUnique; //variable to checkUnique or number is already used
         int n; //variable to store the number in
-        do {
-      n = random(0,24);
-            //checkUnique or number is already used:
-            checkUnique = true;
-            for (int j = 0; j<i; j++)
-                if (n == shipLocation[j]) //if number is already used
+    for (i = 0; i<5; i++)
+        {
+            n = random(0,24);
+        //checkUnique or number is already used:
+        checkUnique = true;
+        for (j = 0; j<i; j++)
                 {
-                    checkUnique = false; //set checkUnique to false
-                    break; //no need to checkUnique the other elements of value[]
+            if (n == shipLocation[j]) //if number is already used
+            {
+                checkUnique = false; //set checkUnique to false
+                break; //no need to checkUnique the other elements of value[]
+            }
                 }
-        } while (checkUnique == false); //loop until new, unique number is found
-        shipLocation[i] = n; //store the generated number in the array
+                if (checkUnique == true) //loop until new, unique number is found
+                {
+                        shipLocation[i] = n; //store the generated number in the array
+                }
     }
-  shipLocation[5] = random(0,24);
-    for (int i = 0; i < 5; i++) //Just to see the random numbers
+    // shipLocation[5] = random(0,24);
+    for (i = 0; i < 5; i++) //Just to see the random numbers
     {
-    Serial.println((shipLocation[i]));
+                Serial.print("this is ");
+                Serial.print(i);
+                Serial.print(" ");
+            Serial.println((shipLocation[i]));
     }
 }
 /*
@@ -371,6 +381,11 @@ void a5(){
 
 void hitOrMiss(int coordinates) {
     //First ship
+        Serial.println(shipLocation[0]);
+        Serial.println(shipLocation[1]);
+        Serial.println(shipLocation[2]);
+        Serial.println(shipLocation[3]);
+        Serial.println(shipLocation[4]);
     if (coordinates == shipLocation[0])
     {
         //remainingShips--;
@@ -530,52 +545,61 @@ void inputs() {
 
 void inputs(char str[], int len) {
   Serial.print("Enter the coordinates: ");
-	int index = 0;
-	while (index < len - 1) {
-		// if something is waiting to be read on Serial0
-		if (Serial.available() > 0) {
-			char attackcoords = Serial.read();
-			// did the user press enter?
-			if (attackcoords == '\r') {
-				break;
-			}
-			else {
-				Serial.print(attackcoords);
-				str[index] = attackcoords;
-				index += 1;
-			}
-		}
-	}
-	str[index] = '\0';
+    int index = 0;
+    while (index < len - 1) {
+        // if something is waiting to be read on Serial0
+        if (Serial.available() > 0) {
+            char attackcoords = Serial.read();
+            // did the user press enter?
+            if (attackcoords == '\r') {
+                break;
+            }
+            else {
+                Serial.print(attackcoords);
+                str[index] = attackcoords;
+                index += 1;
+            }
+        }
+    }
+    str[index] = '\0';
 }
 
 uint32_t theirinput() {
-	char str[32];
-	inputs(str, 32);
+    char str[32];
+    inputs(str, 32);
   Serial.println();
   Serial.print("Attacking ");
   int o = atol(str);
   Serial.print(o);
   Serial.println(" ...");
-	return atol(str);
+    return atol(str);
 }
 
 
 
 int main() {
-    setup();
-        arrayMaker();
-    randomizer();
-        Serial.println();
-        //computerRandomizer();
-        yourArray();
-    battlefield();
+                setup();
+                arrayMaker();
+                randomizer();
+                //computerRandomizer();
+                yourArray();
+                battlefield();
+
         //BELOW TRYING TO EFFICIENCY
         //n = sprintf (buffer, %d %d %d %d %d, a1, a2, a3, a4, a5);
         //printf ("",buffer,n);
         //inputs();
-        int coordinates = theirinput();
-        hitOrMiss(coordinates);
+        int coordinates1 = theirinput();
+        hitOrMiss(coordinates1);
+                int coordinates2 = theirinput();
+        hitOrMiss(coordinates2);
+                int coordinates3 = theirinput();
+        hitOrMiss(coordinates3);
+                int coordinates4 = theirinput();
+        hitOrMiss(coordinates4);
+                int coordinates5 = theirinput();
+        hitOrMiss(coordinates5);
+
         /*
         Serial.println();
         Serial.print("Coordinates: ");
