@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include "read_int.h"
-//#include <ctime>
 
 const int Pin1 = 1;
 void setup() {
@@ -55,6 +54,20 @@ uint32_t gamedifficulty() {
     return atol(str);
 }
 
+void startup(){
+	Serial.println();
+	Serial.println("press enter key to start");
+	while (true){
+		if (Serial.available() > 0) {
+				char difficulty = Serial.read();
+				// did the user press enter?
+				if (difficulty == '\r') {
+						break;
+				}
+			}
+		}
+}
+
 void easyBotsRandomizer() {
         int i;
         int j;
@@ -81,6 +94,7 @@ void easyBotsRandomizer() {
 
 		Serial.println(); // dont remove this print statement
 
+/*
     for (i = 0; i < 5; i++) //Just to see the random numbers
     {
                 Serial.print("this is opponents ships ");
@@ -88,6 +102,7 @@ void easyBotsRandomizer() {
                 Serial.print(" ");
             Serial.println((shipLocation[i]));
     }
+*/
 }
 
 
@@ -108,7 +123,7 @@ void yourRandomizer() {
 			} while (checkUnique2 == false); //loop until new, unique number is found
 			botshipLocation[i] = n; //store the generated number in the array
 	}
-
+	/*
 	for (int i = 0; i < 5; i++) //Just to see the random numbers
 	{
 	Serial.print("this is your ships ");
@@ -116,6 +131,7 @@ void yourRandomizer() {
 	Serial.print(" ");
 	Serial.println((botshipLocation[i]));
 	}
+	*/
 	Serial.println();
 }
 
@@ -145,6 +161,7 @@ void hardBotsRandomizer() {
 
 		Serial.println(); // dont remove this print statement
 
+		/*
     for (i = 0; i < 7; i++) //Just to see the random numbers
     {
                 Serial.print("this is opponents ships ");
@@ -152,6 +169,7 @@ void hardBotsRandomizer() {
                 Serial.print(" ");
             Serial.println((hardShipLocation[i]));
     }
+		*/
 }
 
 
@@ -164,6 +182,7 @@ void aiPath(){
 	   botPath[n] =  botPath[i]; // random postion gets assigned
 	   botPath[i] = temp;
 	}
+	/*
 	for (int i = 0; i < 25; i++) //Just to see the random numbers
 	{
 		Serial.print("this is ai path ");
@@ -172,6 +191,7 @@ void aiPath(){
 		Serial.println((botPath[i]));
 		}
 		Serial.println();
+		*/
 }
 
 
@@ -200,19 +220,23 @@ void arrayMaker(){
     }
 }
 
-
-
 void battlefield() {
-  Serial.println(  "Positioning: \n");
-    Serial.println(  " | ""  " "0"  " |  "  "1"  " |  "  "2"  " | "    "3"  "  |  "   "4"" | " );
-    Serial.println(  "---------------------------");
-    Serial.println(  " | ""  " "5"  " |  "  "6"  " |  "  "7"  " | "    "8"  "  |  "   "9"" | "  );
-    Serial.println(  "---------------------------");
-    Serial.println(  " | "" "  "10"  " | "  "11"  " | "  "12"  " | "  "13"  " | "  "14"" | " );
-    Serial.println(  "---------------------------");
-    Serial.println(  " | "" "  "15"  " | "  "16"  " | "  "17"  " | "  "18"  " | "  "19"" | " );
-    Serial.println(  "---------------------------");
-    Serial.println(  " | "" "  "20"  " | "  "21"  " | "  "22"  " | "  "23"  " | "  "24"" | " );
+    Serial.print(  "Positioning: \n");
+		Serial.println("                                                   Legend");
+    Serial.print(" |  0 |  1 |  2 |  3 |  4 |");
+		Serial.println("					?: on your field is empty spot, on opponents is unidentified");
+    Serial.print(" ---------------------------");
+		Serial.println("					O: on your field it is position of your ship");
+    Serial.print(  " |  5 |  6 |  7 |  8 |  9 |");
+		Serial.println("					!: on your field means your destroyed ship");
+    Serial.print(  " ---------------------------");
+		Serial.println("					-: on both fields means attack missed");
+    Serial.print(  " | 10 | 11 | 12 | 13 | 14 |");
+		Serial.println("					X: on opponents field means opponents destroyed ship");
+    Serial.println(  " ---------------------------");
+    Serial.println(  " | 15 | 16 | 17 | 18 | 19 | " );
+    Serial.println(  " ---------------------------");
+    Serial.println(  " | 20 | 21 | 22 | 23 | 24 | " );
 		Serial.println("\n");
 
         Serial.print(    "Your opponents field: ");
@@ -369,20 +393,11 @@ int sortDifference(const void *cmp1, const void *cmp2) // function that sorts an
   int a = *((int *)cmp1);
   int b = *((int *)cmp2);
   // The comparison
-  return a > b ? -1 : (a < b ? 1 : 0);
+  //return a > b ? -1 : (a < b ? 1 : 0);
   // A simpler, probably faster way:
-  //return b - a;
+  return b - a;
 }
-int sorthardDifference(const void *cmp1, const void *cmp2) // function that sorts an array in descending order
-{
-  // Need to cast the void * to int *
-  int a = *((int *)cmp1);
-  int b = *((int *)cmp2);
-  // The comparison
-  return a > b ? -1 : (a < b ? 1 : 0);
-  // A simpler, probably faster way:
-  //return b - a;
-}
+
 
 void hardHitOrMiss(int coordinates) {
     //First ship
@@ -540,22 +555,25 @@ void hardHitOrMiss(int coordinates) {
 				Serial.println(  "---------------------------");
 				for (int i = 0; i < 7; i++){
 					hardDifference[i] = abs(coordinates-hardShipLocation[i]);
+          /*
 					Serial.print("this is presort ");
 					Serial.println(i);
 					Serial.println(hardDifference[i]);
+          */
 				}
 				int hardDifferenceLength = sizeof(hardDifference) / sizeof(hardDifference[0]);
 			  // qsort - last parameter is a function pointer to the sort function
-			  qsort(hardDifference, hardDifferenceLength, sizeof(hardDifference[0]), sorthardDifference);
-
+			  qsort(hardDifference, hardDifferenceLength, sizeof(hardDifference[0]), sortDifference);
+        /*
 				for (int i = 0; i < 7; i++){
 					Serial.print("this is postsort ");
 					Serial.println(i);
 					Serial.println(hardDifference[i]);
 				}
+        */
 
 				Serial.print("You missed by ");
-				Serial.println(hardDifference[6]);
+				Serial.println(hardDifference[6]); // must keep these two prints
     }
 }
 
@@ -941,27 +959,28 @@ uint32_t theirinput() {
 
 int main() {
         setup();
-				Serial.println("passed setup");
+				//Serial.println("passed setup");
 				int difficulty = gamedifficulty();
-				Serial.println("passed setting game difficulty");
+				//Serial.println("passed setting game difficulty");
 
 				if (difficulty == 1){
 					remainingShips = 5;
 					arrayMaker(); //initial battlefield display
-					Serial.println("passed making array");
+					//Serial.println("passed making array");
 	        easyBotsRandomizer(); //randomize opponents ship locations
-					Serial.println("passed randomizing opponent");
+					//Serial.println("passed randomizing opponent");
 					yourRandomizer(); //randomize your ship locations
-					Serial.println("passed randomizing yourself");
+					//Serial.println("passed randomizing yourself");
 					aiPath(); // order the AI will play each turn
 	        yourInitialArray(); // initial array
 	        battlefield();
-					Serial.print("this is game ");
-					Serial.println(game);
+					//Serial.print("this is game ");
+					//Serial.println(game);
+					startup();
 					while (game == 1){
-						Serial.println("looping");
+						//Serial.println("looping");
 						turnCount++;
-						Serial.println(turnCount);
+						//Serial.println(turnCount);
 						if (turnCount%2 == 1){ //on odd turns you go
 			        int coordinates = theirinput();
 			        hitOrMiss(coordinates);
@@ -979,25 +998,26 @@ int main() {
 			if (difficulty == 2){
 				remainingShips = 7;
 				arrayMaker(); //initial battlefield display
-				Serial.println("passed making array");
+				//Serial.println("passed making array");
 				hardBotsRandomizer(); //randomize opponents ship locations
-				Serial.println("passed randomizing opponent");
+				//Serial.println("passed randomizing opponent");
 				yourRandomizer(); //randomize your ship locations
-				Serial.println("passed randomizing yourself");
+				//Serial.println("passed randomizing yourself");
 				aiPath(); // order the AI will play each turn
 				yourInitialArray(); // initial array
 				battlefield();
-				Serial.print("this is game ");
-				Serial.println(game);
+				//Serial.print("this is game ");
+				//Serial.println(game);
+				startup();
 				while (game == 1){
-					Serial.println("looping");
+					//Serial.println("looping");
 					turnCount++;
-					Serial.println(turnCount);
-					if (turnCount%2 == 1){ //on odd turns you go
+					//Serial.println(turnCount);
+					if (turnCount%2 == 0){ //on even turns you go
 						int coordinates = theirinput();
 						hardHitOrMiss(coordinates);
 
-				} else if (turnCount%2 == 0){ // on even turns so opponent goes
+				} else if (turnCount%2 == 1){ // on odd turns opponent goes
 					//int i == 0;
 
 					if (botHitOrMiss() == 0){
@@ -1011,25 +1031,26 @@ int main() {
 		if (difficulty == 3){
 			remainingShips = 7;
 			arrayMaker(); //initial battlefield display
-			Serial.println("passed making array");
+			//Serial.println("passed making array");
 			hardBotsRandomizer(); //randomize opponents ship locations
-			Serial.println("passed randomizing opponent");
+			//Serial.println("passed randomizing opponent");
 			yourRandomizer(); //randomize your ship locations
-			Serial.println("passed randomizing yourself");
+			//Serial.println("passed randomizing yourself");
 			aiPath(); // order the AI will play each turn
 			yourInitialArray(); // initial array
 			battlefield();
-			Serial.print("this is game ");
-			Serial.println(game);
+			//Serial.print("this is game ");
+			//Serial.println(game);
+			startup();
 			while (game == 1){
-				Serial.println("looping");
+				//Serial.println("looping");
 				turnCount++;
-				Serial.println(turnCount);
-				if (turnCount%2 == 1){ //on odd turns you go
+				//Serial.println(turnCount);
+				if (turnCount%2 == 0){ //on even turns you go
 					int coordinates = theirinput();
 					hardHitOrMiss(coordinates);
 
-			} else if (turnCount%2 == 0){ // on even turns so opponent goes
+			} else if (turnCount%2 == 1){ // on odd turns opponent goes
 				if (botHitOrMiss() == 0){
 					Serial.println("You lost all your ships you lose ");
 					break;
@@ -1041,8 +1062,6 @@ int main() {
 			}
 			}
 		}
-
-
     Serial.flush();
         return 0;
 }
