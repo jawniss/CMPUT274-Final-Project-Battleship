@@ -10,6 +10,7 @@ void setup() {
     Serial3.begin(9600);
     randomSeed(analogRead(0)); // to randomize the seed for random
 }
+
 int shipLocation[5];
 int hardShipLocation[7];
 int botshipLocation[5];
@@ -18,6 +19,8 @@ int yourRemainingShips = 5;
 char position[25];
 char yourPosition[25];
 int botPath[25] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};
+int difference[5];
+int hardDifference[7];
 int game = 1;
 int turnCount = 0;
 int move = 0;
@@ -49,8 +52,6 @@ uint32_t gamedifficulty() {
   Serial.println("Pick your difficulty (1:easy) (2:medium) (3:hard) ");
 	difficultyInputs(str, 32);
   int o = atol(str);
-  //Serial.print(o);
-  //Serial.println(" ...");
     return atol(str);
 }
 
@@ -176,30 +177,20 @@ void aiPath(){
 
 void yourInitialArray(){
 
-	/*
-	for (int i = 0; i < 5; i++) //Just to see the random numbers
-	{
-	Serial.print("this is your ships ");
-	Serial.print(i);
-	Serial.print(" ");
-	Serial.println((botshipLocation[i]));
-	}
-	Serial.println();
-	*/
   for (int i = 0; i < 25; i++){
-      if (i == botshipLocation[0]){
-          yourPosition[i] = 'O';
-      } else if (i == botshipLocation[1]){
-          yourPosition[i] = 'O';
-      } else if (i == botshipLocation[2]){
-          yourPosition[i] = 'O';
-      } else if (i == botshipLocation[3]){
-          yourPosition[i] = 'O';
-      } else if (i == botshipLocation[4]){
-          yourPosition[i] = 'O';
-      } else {
-          yourPosition[i] = '?';
-      }
+    if (i == botshipLocation[0]){
+        yourPosition[i] = 'O';
+    } else if (i == botshipLocation[1]){
+        yourPosition[i] = 'O';
+    } else if (i == botshipLocation[2]){
+        yourPosition[i] = 'O';
+    } else if (i == botshipLocation[3]){
+        yourPosition[i] = 'O';
+    } else if (i == botshipLocation[4]){
+        yourPosition[i] = 'O';
+    } else {
+        yourPosition[i] = '?';
+    }
   }
 }
 
@@ -372,6 +363,27 @@ void battlefield() {
 
 }
 
+int sortDifference(const void *cmp1, const void *cmp2) // function that sorts an array in descending order
+{
+  // Need to cast the void * to int *
+  int a = *((int *)cmp1);
+  int b = *((int *)cmp2);
+  // The comparison
+  return a > b ? -1 : (a < b ? 1 : 0);
+  // A simpler, probably faster way:
+  //return b - a;
+}
+int sorthardDifference(const void *cmp1, const void *cmp2) // function that sorts an array in descending order
+{
+  // Need to cast the void * to int *
+  int a = *((int *)cmp1);
+  int b = *((int *)cmp2);
+  // The comparison
+  return a > b ? -1 : (a < b ? 1 : 0);
+  // A simpler, probably faster way:
+  //return b - a;
+}
+
 void hardHitOrMiss(int coordinates) {
     //First ship
         Serial.println(hardShipLocation[0]);
@@ -526,6 +538,24 @@ void hardHitOrMiss(int coordinates) {
 				Serial.println(coordinates);
         Serial.println("You did not hit a ship!");
 				Serial.println(  "---------------------------");
+				for (int i = 0; i < 7; i++){
+					hardDifference[i] = abs(coordinates-hardShipLocation[i]);
+					Serial.print("this is presort ");
+					Serial.println(i);
+					Serial.println(hardDifference[i]);
+				}
+				int hardDifferenceLength = sizeof(hardDifference) / sizeof(hardDifference[0]);
+			  // qsort - last parameter is a function pointer to the sort function
+			  qsort(hardDifference, hardDifferenceLength, sizeof(hardDifference[0]), sorthardDifference);
+
+				for (int i = 0; i < 7; i++){
+					Serial.print("this is postsort ");
+					Serial.println(i);
+					Serial.println(hardDifference[i]);
+				}
+
+				Serial.print("You missed by ");
+				Serial.println(hardDifference[6]);
     }
 }
 
@@ -643,6 +673,25 @@ void hitOrMiss(int coordinates) {
 				Serial.println(coordinates);
         Serial.println("You did not hit a ship!");
 				Serial.println(  "---------------------------");
+
+				for (int i = 0; i < 5; i++){
+					difference[i] = abs(coordinates-shipLocation[i]);
+					//Serial.print("this is presort ");
+					//Serial.println(i);
+					//Serial.println(difference[i]);
+				}
+				int differenceLength = sizeof(difference) / sizeof(difference[0]);
+			  // qsort - last parameter is a function pointer to the sort function
+			  qsort(difference, differenceLength, sizeof(difference[0]), sortDifference);
+				/*
+				for (int i = 0; i < 5; i++){
+					Serial.print("this is postsort ");
+					Serial.println(i);
+					Serial.println(difference[i]);
+				}
+				*/
+				Serial.print("You missed by ");
+				Serial.println(difference[4]);
     }
 }
 
@@ -856,7 +905,6 @@ void inputs() {
 */
 
 
-
 void inputs(char str[], int len) {
   Serial.print("Enter the coordinates: ");
     int index = 0;
@@ -920,7 +968,6 @@ int main() {
 
 					} else if (turnCount%2 == 0){ // on even turns so opponent goes
 						//int i == 0;
-						botHitOrMiss();
 						if (botHitOrMiss() == 0){
 							Serial.println("You lost all your ships you lose ");
 							break;
@@ -952,7 +999,7 @@ int main() {
 
 				} else if (turnCount%2 == 0){ // on even turns so opponent goes
 					//int i == 0;
-					botHitOrMiss();
+
 					if (botHitOrMiss() == 0){
 						Serial.println("You lost all your ships you lose ");
 						break;
@@ -983,16 +1030,19 @@ int main() {
 					hardHitOrMiss(coordinates);
 
 			} else if (turnCount%2 == 0){ // on even turns so opponent goes
-				botHitOrMiss();
-				botHitOrMiss();
+				if (botHitOrMiss() == 0){
+					Serial.println("You lost all your ships you lose ");
+					break;
+				}
 				if (botHitOrMiss() == 0){
 					Serial.println("You lost all your ships you lose ");
 					break;
 				}
 			}
+			}
 		}
-	}
+
 
     Serial.flush();
         return 0;
-    }
+}
