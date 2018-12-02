@@ -80,7 +80,7 @@ void HitMissIndicator() {
 void Minigame() {
 	Serial.println("Minigame");
 	int counter = 0;
-	uint32_t period = 20000L;       // 1min = 1 * 60000L
+	uint32_t period = 10000L;       // 1min = 1 * 60000L
 
 	for(uint32_t tStart = millis(); (millis()-tStart) < period; ){
 
@@ -104,7 +104,28 @@ void Minigame() {
 	delay(500);
 }
 
+}
 
+void PreMinigame() {
+	Serial.println("Press fire button when ready");
+	int u = 0;
+	digitalWrite(HitMissLEDs[0], HIGH);
+	while (u == 0) {
+	if (digitalRead(ButtonFIRE) == LOW) {
+		digitalWrite(HitMissLEDs[0], LOW);
+		digitalWrite(HitMissLEDs[1], HIGH);
+		Serial.println("Starting minigame");
+		Minigame();
+		Serial.println("Minigame done!");
+		digitalWrite(HitMissLEDs[0], LOW);
+		digitalWrite(HitMissLEDs[1], LOW);
+		digitalWrite(MinigameLEDs[0], LOW);
+		digitalWrite(MinigameLEDs[1], LOW);
+		digitalWrite(MinigameLEDs[2], LOW);
+		// SuccessFail();
+		u = 1;
+	}
+}
 }
 
 
@@ -116,12 +137,12 @@ void SuccessFail() {
 		}
 	}
 	if (mode == medium) {
-		if (counter >= 10) {
+		if (counter >= 7) {
 			Successful hit
 		}
 	}
 	if (mode == hard) {
-		if (counter >= 15) {
+		if (counter >= 10) {
 			Successful hit
 		}
 	}
@@ -139,21 +160,13 @@ int main() {
 		digitalWrite(MinigameLEDs[2], LOW);
 		digitalWrite(HitMissLEDs[0], LOW);
 		digitalWrite(HitMissLEDs[1], LOW);
-		Serial.println("Press fire button when ready");
-		int u = 0;
-		while (u == 0) {
-		if (digitalRead(ButtonFIRE) == LOW) {
-			Serial.println("Starting minigame");
-			Minigame();
-			Serial.println("Minigame done!");
-			digitalWrite(MinigameLEDs[0], LOW);
-			digitalWrite(MinigameLEDs[1], LOW);
-			digitalWrite(MinigameLEDs[2], LOW);
-			// SuccessFail();
-			u = 1;
-		}
-	}
-
+		//if (coordinates == hardShipLocation[0] or
+		//coordinates == hardShipLocation[1] or
+		//coordinates == hardShipLocation[2] or
+		//coordinates == hardShipLocation[3] or
+		//coordinates == hardShipLocation[4]) {
+		PreMinigame();
+		// }
 // ONLY PROBLEM IS THAT YOU COULD HOLD DOWN
 // ALL BUTTONS, AND YOU WOULD ALWAYS win
 // BUT THAT SUCKS ..
