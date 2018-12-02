@@ -1,28 +1,20 @@
 #include <Arduino.h>
 
 
+
 /*
 want 3 lights on side for minigame
 want 3 buttons for each of those lights
-maybe 2 buttons - one for fire, one for something else?
+1 extra "fire" button
 
 
 */
 
-
-
-
-// set variables
-//const int LEDPins[5] = { 9, 10, 11, 12, 13 };
 const int MinigameLEDs[3] = { 9, 10, 11 };
 const int HitMissLEDs[2] = { 12, 13 };
-//const int LEDoff[5] = { LOW, LOW, LOW, LOW, LOW };
-//const int LEDon[5] = { HIGH, HIGH, HIGH, HIGH, HIGH };
 
 
-const int ButtonMiniG1 = 4;
-const int ButtonMiniG2 = 5;
-const int ButtonMiniG3 = 6;          // The increment button
+const int ButtonMiniG[3] = {4, 5, 6};
 const int ButtonFIRE = 7;          // The fire button
 
 // Set the pins and LEDS as inputs and outputs
@@ -40,16 +32,14 @@ void setup() {
     // turn on the internal pull-up resistors
 		pinMode(ButtonFIRE, INPUT);
     digitalWrite(ButtonFIRE, HIGH);
-    pinMode(ButtonMiniG1, INPUT);
-    digitalWrite(ButtonMiniG1, HIGH);
-    pinMode(ButtonMiniG2, INPUT);
-    digitalWrite(ButtonMiniG2, HIGH);
-		pinMode(ButtonMiniG3, INPUT);
-		digitalWrite(ButtonMiniG3, HIGH);
+    pinMode(ButtonMiniG[0], INPUT);
+    digitalWrite(ButtonMiniG[0], HIGH);
+    pinMode(ButtonMiniG[1], INPUT);
+    digitalWrite(ButtonMiniG[1], HIGH);
+		pinMode(ButtonMiniG[2], INPUT);
+		digitalWrite(ButtonMiniG[2], HIGH);
 }
 
-
-// Turn LEDS on or off according to binary form of PushCount
 
 /*
 void HitMissIndicator() {
@@ -84,142 +74,91 @@ void HitMissIndicator() {
 */
 
 
+
+
+
 void Minigame() {
 	Serial.println("Minigame");
 	int counter = 0;
-	int whichled[3];
-	int range = 3 - 1 + 1;
-	int num1 = rand() % 3; //this should give 1, 2 or 3 ..
-	int num2 = rand() % 3; // don't think this works so uh
-	int num3 = rand() % 3; // fix it later
-	whichled[0] = num1;
-	Serial.println(num1);
-	whichled[1] = num2;
-	Serial.println(num2);
-	whichled[2] = num3;
-	Serial.println(num3);
+	uint32_t period = 20000L;       // 1min = 1 * 60000L
 
+	for(uint32_t tStart = millis(); (millis()-tStart) < period; ){
 
+		digitalWrite(MinigameLEDs[rand()%3], HIGH);
 
-	digitalWrite(MinigameLEDs[0], HIGH);
-	while (digitalRead(MinigameLEDs[0]) == HIGH) {
-	if (digitalRead(ButtonMiniG1 == LOW)) {
-		Serial.println("Test 1/3 success");
+	if (digitalRead(ButtonMiniG[0]) == LOW && digitalRead(MinigameLEDs[0]) == HIGH) {
 		counter++;
-		Serial.print("Counter is: ");
 		Serial.println(counter);
 		digitalWrite(MinigameLEDs[0], LOW);
-		}
 	}
-	delay(5000);
-	Serial.println("delay1");
-	digitalWrite(MinigameLEDs[0], LOW);
-	Serial.println("1 off");
-
-	delay(3000);
-
-	digitalWrite(MinigameLEDs[1], HIGH);
-	while (digitalRead(MinigameLEDs[1]) == HIGH) {
-	if (digitalRead(ButtonMiniG2 == LOW)) {
-		Serial.println("Test 2/3 success");
+	if (digitalRead(ButtonMiniG[1]) == LOW && digitalRead(MinigameLEDs[1]) == HIGH) {
 		counter++;
-		Serial.print("Counter is: ");
 		Serial.println(counter);
 		digitalWrite(MinigameLEDs[1], LOW);
-		}
 	}
-	delay(5000);
-	Serial.println("delay2");
-	digitalWrite(MinigameLEDs[1], LOW);
-	Serial.println("2 off");
-
-	delay(3000);
-
-	digitalWrite(MinigameLEDs[2], HIGH);
-	while (digitalRead(MinigameLEDs[2]) == HIGH) {
-	if (digitalRead(ButtonMiniG3 == LOW)) {
-		Serial.println("Test 3/3 success");
+	if (digitalRead(ButtonMiniG[2]) == LOW && digitalRead(MinigameLEDs[2]) == HIGH) {
 		counter++;
-		Serial.print("Counter is: ");
 		Serial.println(counter);
 		digitalWrite(MinigameLEDs[2], LOW);
-		}
 	}
-	delay(5000);
-	Serial.println("delay3");
-	digitalWrite(MinigameLEDs[2], LOW);
-	Serial.println("3 off");
-
-
-
-
-
-	if (counter == 3) {
-		Serial.println("Garenteed hit!");
-		//*** have ship be actually successful hit ***
-	} else if (counter == 2) {
-		Serial.println("Great chance");
-		//*** have ship have ~ 66% chance? ***
-	} else if (counter == 1) {
-		Serial.println("Not too good chance");
-		//*** ~ 50%? ***
-	} else if (counter == 0) {
-		Serial.println("Not good chance");
-		//*** 0 - 50%? ***
-	}
+	delay(500);
+}
 
 
 }
 
 
+/*
+void SuccessFail() {
+	if (mode == easy) {
+		if (counter >= 5) {
+			Successful hit
+		}
+	}
+	if (mode == medium) {
+		if (counter >= 10) {
+			Successful hit
+		}
+	}
+	if (mode == hard) {
+		if (counter >= 15) {
+			Successful hit
+		}
+	}
+}
+*/
 
 
 // Main function
 int main() {
     // Initialize
 	setup();
-	/*
-    // Set PushCount as 0 for start
-	int PushCount = 0;
-    // Main function
-	while (true) {
-        // If increment button pressed, add 1 to PushCount
-        if ( digitalRead(P1ButtonPin) == LOW ) {
-            PushCount++;
-        }
-        // If decrement button pressed, take 1 from PushCount. If PushCount
-        // is already 0, keep at 0 (don't go into negative numbers)
-        if ( digitalRead(P2ButtonPin) == LOW ) {
-            if ( PushCount > 0 ) {
-                PushCount--;
-            } else if ( PushCount == 0 ){
-                PushCount = 0;
-            }
-        }
-        // Convert PushCount to binary using dectobin sub function
-        dectobin(PushCount);
-        // Turn lights on or off according to PushCount (binary form) using
-        // lightswitching sub function
-        lightswitching();
-        // wait 100 ms for any button bounce to die out
-        delay(100);
-    }  // end while true
-*/
+
 		digitalWrite(MinigameLEDs[0], LOW);
 		digitalWrite(MinigameLEDs[1], LOW);
 		digitalWrite(MinigameLEDs[2], LOW);
 		digitalWrite(HitMissLEDs[0], LOW);
 		digitalWrite(HitMissLEDs[1], LOW);
-		//if (digitalRead(ButtonFIRE) == LOW) {
-		//	Serial.println("BEGIN");
+		Serial.println("Press fire button when ready");
+		int u = 0;
+		while (u == 0) {
+		if (digitalRead(ButtonFIRE) == LOW) {
+			Serial.println("Starting minigame");
 			Minigame();
-	//	}
+			Serial.println("Minigame done!");
+			digitalWrite(MinigameLEDs[0], LOW);
+			digitalWrite(MinigameLEDs[1], LOW);
+			digitalWrite(MinigameLEDs[2], LOW);
+			// SuccessFail();
+			u = 1;
+		}
+	}
 
+// ONLY PROBLEM IS THAT YOU COULD HOLD DOWN
+// ALL BUTTONS, AND YOU WOULD ALWAYS win
+// BUT THAT SUCKS ..
 
-
-
-
-		Serial.flush();
+Serial.flush();
 	return 0;
 }  // end main
 
