@@ -86,23 +86,23 @@ void Minigame() {
 
 		digitalWrite(MinigameLEDs[rand()%3], HIGH);
 
-	if (digitalRead(ButtonMiniG[0]) == LOW && digitalRead(MinigameLEDs[0]) == HIGH) {
-		counter++;
-		Serial.println(counter);
-		digitalWrite(MinigameLEDs[0], LOW);
+		if (digitalRead(ButtonMiniG[0]) == LOW && digitalRead(MinigameLEDs[0]) == HIGH) {
+			counter++;
+			Serial.println(counter);
+			digitalWrite(MinigameLEDs[0], LOW);
+		}
+		if (digitalRead(ButtonMiniG[1]) == LOW && digitalRead(MinigameLEDs[1]) == HIGH) {
+			counter++;
+			Serial.println(counter);
+			digitalWrite(MinigameLEDs[1], LOW);
+		}
+		if (digitalRead(ButtonMiniG[2]) == LOW && digitalRead(MinigameLEDs[2]) == HIGH) {
+			counter++;
+			Serial.println(counter);
+			digitalWrite(MinigameLEDs[2], LOW);
+		}
+		delay(500);
 	}
-	if (digitalRead(ButtonMiniG[1]) == LOW && digitalRead(MinigameLEDs[1]) == HIGH) {
-		counter++;
-		Serial.println(counter);
-		digitalWrite(MinigameLEDs[1], LOW);
-	}
-	if (digitalRead(ButtonMiniG[2]) == LOW && digitalRead(MinigameLEDs[2]) == HIGH) {
-		counter++;
-		Serial.println(counter);
-		digitalWrite(MinigameLEDs[2], LOW);
-	}
-	delay(500);
-}
 
 }
 
@@ -111,21 +111,21 @@ void PreMinigame() {
 	int u = 0;
 	digitalWrite(HitMissLEDs[0], HIGH);
 	while (u == 0) {
-	if (digitalRead(ButtonFIRE) == LOW) {
-		digitalWrite(HitMissLEDs[0], LOW);
-		digitalWrite(HitMissLEDs[1], HIGH);
-		Serial.println("Starting minigame");
-		Minigame();
-		Serial.println("Minigame done!");
-		digitalWrite(HitMissLEDs[0], LOW);
-		digitalWrite(HitMissLEDs[1], LOW);
-		digitalWrite(MinigameLEDs[0], LOW);
-		digitalWrite(MinigameLEDs[1], LOW);
-		digitalWrite(MinigameLEDs[2], LOW);
-		// SuccessFail();
-		u = 1;
+		if (digitalRead(ButtonFIRE) == LOW) {
+			digitalWrite(HitMissLEDs[0], LOW);
+			digitalWrite(HitMissLEDs[1], HIGH);
+			Serial.println("Starting minigame");
+			Minigame();
+			Serial.println("Minigame done!");
+			digitalWrite(HitMissLEDs[0], LOW);
+			digitalWrite(HitMissLEDs[1], LOW);
+			digitalWrite(MinigameLEDs[0], LOW);
+			digitalWrite(MinigameLEDs[1], LOW);
+			digitalWrite(MinigameLEDs[2], LOW);
+			// SuccessFail();
+			u = 1;
+		}
 	}
-}
 }
 
 

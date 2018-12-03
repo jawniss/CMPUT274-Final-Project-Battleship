@@ -1,6 +1,173 @@
 #include <Arduino.h>
 #include "read_int.h"
 
+
+const int MinigameLEDs[3] = { 9, 10, 11 };
+const int HitMissLEDs[2] = { 12, 13 };
+
+
+const int ButtonMiniG[3] = {4, 5, 6};
+const int ButtonFIRE = 7;          // The fire button
+
+const int Pin1 = 1;
+
+int counter = 0;
+int lighthits;
+int valid;
+
+// Set the pins and LEDS as inputs and outputs
+void setup() {
+	init();
+	Serial.begin(9600);
+    // config LED pins to be a digital OUTPUT
+    pinMode(MinigameLEDs[0], OUTPUT);
+		pinMode(MinigameLEDs[1], OUTPUT);
+		pinMode(MinigameLEDs[2], OUTPUT);
+		pinMode(HitMissLEDs[0], OUTPUT);
+		pinMode(HitMissLEDs[1], OUTPUT);
+
+    // configure the button pins to be a digital INPUT
+    // turn on the internal pull-up resistors
+		pinMode(ButtonFIRE, INPUT);
+    digitalWrite(ButtonFIRE, HIGH);
+    pinMode(ButtonMiniG[0], INPUT);
+    digitalWrite(ButtonMiniG[0], HIGH);
+    pinMode(ButtonMiniG[1], INPUT);
+    digitalWrite(ButtonMiniG[1], HIGH);
+		pinMode(ButtonMiniG[2], INPUT);
+		digitalWrite(ButtonMiniG[2], HIGH);
+
+    randomSeed(analogRead(0));
+}
+
+/*
+void HitMissIndicator() {
+    if (***hit a ship ***) {
+			digitalWrite(HitMissLEDs[0], HIGH);
+			digitalWrite(HitMissLEDs[1], LOW);
+			delay(400);
+			digitalWrite(HitMissLEDs[0], LOW);
+			delay(400);
+			digitalWrite(HitMissLEDs[0], HIGH);
+			delay(400);
+			digitalWrite(HitMissLEDs[0], LOW);
+			delay(400);
+			digitalWrite(HitMissLEDs[0], HIGH);
+			delay(1500);
+			digitalWrite(HitMissLEDs[0], LOW);
+		} else if (***missed a ship***) {
+			digitalWrite(HitMissLEDs[0], LOW);
+			digitalWrite(HitMissLEDs[1], HIGH);
+			delay(400);
+			digitalWrite(HitMissLEDs[1], LOW);
+			delay(400);
+			digitalWrite(HitMissLEDs[1], HIGH);
+			delay(400);
+			digitalWrite(HitMissLEDs[1], LOW);
+			delay(400);
+			digitalWrite(HitMissLEDs[1], HIGH);
+			delay(1500);
+			digitalWrite(HitMissLEDs[1], LOW);
+		}
+}
+*/
+
+
+int Minigame() {
+	int counter = 0;
+	uint32_t period = 10000L;       // 1min = 1 * 60000L
+
+	for(uint32_t tStart = millis(); (millis()-tStart) < period; ){
+
+		digitalWrite(MinigameLEDs[rand()%3], HIGH);
+
+		if (digitalRead(ButtonMiniG[0]) == LOW && digitalRead(MinigameLEDs[0]) == HIGH) {
+			counter++;
+      Serial.print("Your score is: ");
+			Serial.println(counter);
+			digitalWrite(MinigameLEDs[0], LOW);
+		}
+		if (digitalRead(ButtonMiniG[1]) == LOW && digitalRead(MinigameLEDs[1]) == HIGH) {
+			counter++;
+      Serial.print("Your score is: ");
+			Serial.println(counter);
+			digitalWrite(MinigameLEDs[1], LOW);
+		}
+		if (digitalRead(ButtonMiniG[2]) == LOW && digitalRead(MinigameLEDs[2]) == HIGH) {
+			counter++;
+      Serial.print("Your score is: ");
+			Serial.println(counter);
+			digitalWrite(MinigameLEDs[2], LOW);
+		}
+		delay(500);
+	}
+  return counter;
+}
+
+
+
+
+int PreMinigame() {
+	Serial.println("You found a ship!");
+  Serial.println("This minigame only uses the 3 right LEDs.");
+  Serial.print("Press and hold a lit LED's button when they turn on until ");
+  Serial.println("the LED turns off.");
+  Serial.println("Each successful button press increases your score by 1. ");
+  Serial.print("For a successful ship hit get above 5 score on Easy, ");
+  Serial.println("above 10 on Medium or Hard.");
+  Serial.println("Your score will update on screen.");
+	Serial.print("Press leftmost fire button when ready - the leftmost green ");
+  Serial.println("LED will stay on during the game.");
+	Serial.println("The game lasts 10 seconds. Good luck!");
+
+	int u = 0;
+	digitalWrite(HitMissLEDs[0], HIGH);
+	while (u == 0) {
+		if (digitalRead(ButtonFIRE) == LOW) {
+			digitalWrite(HitMissLEDs[0], LOW);
+			digitalWrite(HitMissLEDs[1], HIGH);
+			Serial.println("Starting minigame ...");
+			lighthits = Minigame();
+			Serial.println("Minigame finished!");
+			digitalWrite(HitMissLEDs[0], LOW);
+			digitalWrite(HitMissLEDs[1], LOW);
+			digitalWrite(MinigameLEDs[0], LOW);
+			digitalWrite(MinigameLEDs[1], LOW);
+			digitalWrite(MinigameLEDs[2], LOW);
+			// SuccessFail();
+			u = 1;
+		}
+	}
+  return lighthits;
+}
+
+
+
+
+/*
+void SuccessFail() {
+	if (mode == easy) {
+		if (counter >= 5) {
+			Successful hit
+		}
+	}
+	if (mode == medium) {
+		if (counter >= 7) {
+			Successful hit
+		}
+	}
+	if (mode == hard) {
+		if (counter >= 10) {
+			Successful hit
+		}
+	}
+}
+*/
+
+
+
+
+/*
 const int Pin1 = 1;
 void setup() {
     // setup function for initializing
@@ -9,6 +176,8 @@ void setup() {
     Serial3.begin(9600);
     randomSeed(analogRead(0)); // to randomize the seed for random
 }
+
+*/
 
 int shipLocation[5];
 int hardShipLocation[7];
@@ -48,7 +217,7 @@ void difficultyInputs(char str[], int len) {
 uint32_t gamedifficulty() {
   char str[32];
   Serial.println();
-  Serial.println("Pick your difficulty (1:easy) (2:medium) (3:hard) ");
+  Serial.println("Pick your difficulty: 1 for Easy, 2 for Medium, 3 for Hard.");
 	difficultyInputs(str, 32);
   int o = atol(str);
     return atol(str);
@@ -56,7 +225,7 @@ uint32_t gamedifficulty() {
 
 void startup(){
 	Serial.println();
-	Serial.println("press enter key to start");
+	Serial.println("Press the Enter key to start:");
 	while (true){
 		if (Serial.available() > 0) {
 				char difficulty = Serial.read();
@@ -239,9 +408,9 @@ void battlefield() {
     Serial.println(  " | 20 | 21 | 22 | 23 | 24 | " );
 		Serial.println("\n");
 
-        Serial.print(    "Your opponents field: ");
+        Serial.print(    "Your opponent's field: ");
         Serial.print(remainingShips);
-        Serial.print(" their ships left!                                  your current remainingShips  ");
+        Serial.print(" ships left!                                       Your current remaining ships: ");
         Serial.println(yourRemainingShips);
 
     Serial.print( " |  " );
@@ -401,6 +570,7 @@ int sortDifference(const void *cmp1, const void *cmp2) // function that sorts an
 
 void hardHitOrMiss(int coordinates) {
     //First ship
+				/*
         Serial.println(hardShipLocation[0]);
         Serial.println(hardShipLocation[1]);
 				Serial.println(hardShipLocation[2]);
@@ -408,15 +578,29 @@ void hardHitOrMiss(int coordinates) {
 				Serial.println(hardShipLocation[4]);
 				Serial.println(hardShipLocation[5]);
 				Serial.println(hardShipLocation[6]);
+				*/
     if (coordinates == hardShipLocation[0])
     {
+      valid = 0;
+      if (position[coordinates] == 'X') {
+        Serial.println("You've already attacked this position!");
+        Serial.println("You lose your turn for not keeping track!");
+        valid = 1;
+      }
+      if (valid == 0) {
+      PreMinigame();
+
+      Serial.print("Your final score is: ");
+      Serial.println(lighthits);
+      if (lighthits >= 10) {
         //remainingShips--;
         position[coordinates] = 'X';
         remainingShips = (remainingShips - 1);
 				battlefield();
+        Serial.println(  "---------------------------");
 				Serial.print("You attacked position  ");
 				Serial.println(coordinates);
-        Serial.println("You hit a ship");
+        Serial.println("You hit a ship!");
 				Serial.println(  "---------------------------");
         if (remainingShips == 0)//checks whether all ships were hit
         {
@@ -426,17 +610,36 @@ void hardHitOrMiss(int coordinates) {
          Serial.println("You hit all the ships you win !");
 				 game = 0;
         }
+      }
+      else if (lighthits < 10) {
+        Serial.println("The attack was not successful!");
+      }
+    }
     }
     // Second ship
     else if (coordinates == hardShipLocation[1])
     {
+      valid = 0;
+      if (position[coordinates] == 'X') {
+        Serial.println("You've already attacked this position!");
+        Serial.println("You lose your turn for not keeping track!");
+        valid = 1;
+      }
+      if (valid == 0) {
+      PreMinigame();
+
+      Serial.print("Value of counter is: ");
+      Serial.println(lighthits);
+      if (lighthits >= 10) {
+
         //remainingShips--;
         position[coordinates] = 'X';
         remainingShips = (remainingShips - 1);
 				battlefield();
+        Serial.println(  "---------------------------");
 				Serial.print("You attacked position  ");
 				Serial.println(coordinates);
-        Serial.println("You hit a ship");
+        Serial.println("You hit a ship!");
 				Serial.println(  "---------------------------");
         if (remainingShips == 0)//checks whether all ships were hit
         {
@@ -446,17 +649,36 @@ void hardHitOrMiss(int coordinates) {
          Serial.println("You hit all the ships you win !");
 				 game = 0;
         }
+      }
+      else if (lighthits < 10) {
+        Serial.println("The attack was not successful!");
+      }
+    }
     }
     //Third ship
     else if (coordinates == hardShipLocation[2])
     {
+      valid = 0;
+      if (position[coordinates] == 'X') {
+        Serial.println("You've already attacked this position!");
+        Serial.println("You lose your turn for not keeping track!");
+        valid = 1;
+      }
+      if (valid == 0) {
+      PreMinigame();
+
+      Serial.print("Value of counter is: ");
+      Serial.println(lighthits);
+      if (lighthits >= 10) {
+
         //remainingShips--;
         position[coordinates] = 'X';
         remainingShips = (remainingShips - 1);
 				battlefield();
+        Serial.println(  "---------------------------");
 				Serial.print("You attacked position  ");
 				Serial.println(coordinates);
-        Serial.println("You hit a ship");
+        Serial.println("You hit a ship!");
 				Serial.println(  "---------------------------");
         if (remainingShips == 0)//checks whether all ships were hit
         {
@@ -466,17 +688,36 @@ void hardHitOrMiss(int coordinates) {
          Serial.println("You hit all the ships you win !");
 				 game = 0;
         }
+      }
+      else if (lighthits < 10) {
+        Serial.println("The attack was not successful!");
+      }
+    }
     }
     //Forth ship
     else if (coordinates == hardShipLocation[3])
     {
+      valid = 0;
+      if (position[coordinates] == 'X') {
+        Serial.println("You've already attacked this position!");
+        Serial.println("You lose your turn for not keeping track!");
+        valid = 1;
+      }
+      if (valid == 0) {
+      PreMinigame();
+
+      Serial.print("Value of counter is: ");
+      Serial.println(lighthits);
+      if (lighthits >= 10) {
+
         //remainingShips--;
         position[coordinates] = 'X';
         remainingShips = (remainingShips - 1);
 				battlefield();
+        Serial.println(  "---------------------------");
 				Serial.print("You attacked position  ");
 				Serial.println(coordinates);
-        Serial.println("You hit a ship");
+        Serial.println("You hit a ship!");
 				Serial.println(  "---------------------------");
         if (remainingShips == 0)//checks whether all ships were hit
         {
@@ -486,17 +727,36 @@ void hardHitOrMiss(int coordinates) {
          Serial.println("You hit all the ships you win !");
 				 game = 0;
         }
+      }
+      else if (lighthits < 10) {
+        Serial.println("The attack was not successful!");
+      }
     }
+  }
     //Fith ship
     else if (coordinates == hardShipLocation[4])
     {
+      valid = 0;
+      if (position[coordinates] == 'X') {
+        Serial.println("You've already attacked this position!");
+        Serial.println("You lose your turn for not keeping track!");
+        valid = 1;
+      }
+      if (valid == 0) {
+      PreMinigame();
+
+      Serial.print("Value of counter is: ");
+      Serial.println(lighthits);
+      if (lighthits >= 10) {
+
         //remainingShips--;
         position[coordinates] = 'X';
         remainingShips = (remainingShips - 1);
 				battlefield();
+        Serial.println(  "---------------------------");
 				Serial.print("You attacked position  ");
 				Serial.println(coordinates);
-        Serial.println("You hit a ship");
+        Serial.println("You hit a ship!");
 				Serial.println(  "---------------------------");
         if (remainingShips == 0)//checks whether all ships were hit
         {
@@ -506,16 +766,35 @@ void hardHitOrMiss(int coordinates) {
          Serial.println("You hit all the ships you win !");
 				 game = 0;
         }
+      }
+      else if (lighthits < 10) {
+        Serial.println("The attack was not successful!");
+      }
     }
+  }
 		else if (coordinates == hardShipLocation[5])
     {
+      valid = 0;
+      if (position[coordinates] == 'X') {
+        Serial.println("You've already attacked this position!");
+        Serial.println("You lose your turn for not keeping track!");
+        valid = 1;
+      }
+      if (valid == 0) {
+      PreMinigame();
+
+      Serial.print("Value of counter is: ");
+      Serial.println(lighthits);
+      if (lighthits >= 10) {
+
         //remainingShips--;
         position[coordinates] = 'X';
         remainingShips = (remainingShips - 1);
 				battlefield();
+        Serial.println(  "---------------------------");
 				Serial.print("You attacked position  ");
 				Serial.println(coordinates);
-        Serial.println("You hit a ship");
+        Serial.println("You hit a ship!");
 				Serial.println(  "---------------------------");
         if (remainingShips == 0)//checks whether all ships were hit
         {
@@ -525,16 +804,35 @@ void hardHitOrMiss(int coordinates) {
          Serial.println("You hit all the ships you win !");
 				 game = 0;
         }
+      }
+      else if (lighthits < 10) {
+        Serial.println("The attack was not successful!");
+      }
+    }
     }
 		else if (coordinates == hardShipLocation[6])
     {
+      valid = 0;
+      if (position[coordinates] == 'X') {
+        Serial.println("You've already attacked this position!");
+        Serial.println("You lose your turn for not keeping track!");
+        valid = 1;
+      }
+      if (valid == 0) {
+      PreMinigame();
+
+      Serial.print("Value of counter is: ");
+      Serial.println(lighthits);
+      if (lighthits >= 10) {
+
         //remainingShips--;
         position[coordinates] = 'X';
         remainingShips = (remainingShips - 1);
 				battlefield();
+        Serial.println(  "---------------------------");
 				Serial.print("You attacked position  ");
 				Serial.println(coordinates);
-        Serial.println("You hit a ship");
+        Serial.println("You hit a ship!");
 				Serial.println(  "---------------------------");
         if (remainingShips == 0)//checks whether all ships were hit
         {
@@ -544,11 +842,17 @@ void hardHitOrMiss(int coordinates) {
          Serial.println("You hit all the ships you win !");
 				 game = 0;
         }
+      }
+      else if (lighthits < 10) {
+        Serial.println("The attack was not successful!");
+      }
+    }
     }
     else
     {
         position[coordinates] = '-';
         battlefield();
+        Serial.println(  "---------------------------");
 				Serial.print("You attacked position  ");
 				Serial.println(coordinates);
         Serial.println("You did not hit a ship!");
@@ -574,25 +878,41 @@ void hardHitOrMiss(int coordinates) {
 
 				Serial.print("You missed by ");
 				Serial.println(hardDifference[6]); // must keep these two prints
+				Serial.println(  "---------------------------");
     }
 }
 
 void hitOrMiss(int coordinates) {
     //First ship
+		/*
         Serial.println(shipLocation[0]);
         Serial.println(shipLocation[1]);
         Serial.println(shipLocation[2]);
         Serial.println(shipLocation[3]);
         Serial.println(shipLocation[4]);
+		*/
+
     if (coordinates == shipLocation[0])
     {
+      valid = 0;
+      if (position[coordinates] == 'X') {
+        Serial.println("You've already attacked this position!");
+        Serial.println("You lose your turn for not keeping track!");
+        valid = 1;
+      }
+      if (valid == 0) {
+        PreMinigame();
+        Serial.print("Value of counter is: ");
+        Serial.println(lighthits);
+        if (lighthits >= 5) {
         //remainingShips--;
         position[coordinates] = 'X';
         remainingShips = (remainingShips - 1);
 				battlefield();
+        Serial.println(  "---------------------------");
 				Serial.print("You attacked position  ");
 				Serial.println(coordinates);
-        Serial.println("You hit a ship");
+        Serial.println("You hit a ship!");
 				Serial.println(  "---------------------------");
         if (remainingShips == 0)//checks whether all ships were hit
         {
@@ -602,17 +922,35 @@ void hitOrMiss(int coordinates) {
          Serial.println("You hit all the ships you win !");
 				 game = 0;
         }
+      }
+      else if (lighthits < 5) {
+        Serial.println("The attack was not successful!");
+      }
     }
+  }
     // Second ship
     else if (coordinates == shipLocation[1])
     {
+      valid = 0;
+      if (position[coordinates] == 'X') {
+        Serial.println("You've already attacked this position!");
+        Serial.println("You lose your turn for not keeping track!");
+        valid = 1;
+      }
+      if (valid == 0) {
+        PreMinigame();
+
+        Serial.print("Value of counter is: ");
+        Serial.println(lighthits);
         //remainingShips--;
+        if (lighthits >= 5) {
         position[coordinates] = 'X';
         remainingShips = (remainingShips - 1);
 				battlefield();
+        Serial.println(  "---------------------------");
 				Serial.print("You attacked position  ");
 				Serial.println(coordinates);
-        Serial.println("You hit a ship");
+        Serial.println("You hit a ship!");
 				Serial.println(  "---------------------------");
         if (remainingShips == 0)//checks whether all ships were hit
         {
@@ -622,17 +960,35 @@ void hitOrMiss(int coordinates) {
          Serial.println("You hit all the ships you win !");
 				 game = 0;
         }
+      }
+      else if (lighthits < 5) {
+        Serial.println("The attack was not successful!");
+      }
     }
+  }
     //Third ship
     else if (coordinates == shipLocation[2])
     {
+      valid = 0;
+      if (position[coordinates] == 'X') {
+        Serial.println("You've already attacked this position!");
+        Serial.println("You lose your turn for not keeping track!");
+        valid = 1;
+      }
+      if (valid == 0) {
+        PreMinigame();
+
+        Serial.print("Value of counter is: ");
+        Serial.println(lighthits);
         //remainingShips--;
+        if (lighthits >= 5) {
         position[coordinates] = 'X';
         remainingShips = (remainingShips - 1);
 				battlefield();
+        Serial.println(  "---------------------------");
 				Serial.print("You attacked position  ");
 				Serial.println(coordinates);
-        Serial.println("You hit a ship");
+        Serial.println("You hit a ship!");
 				Serial.println(  "---------------------------");
         if (remainingShips == 0)//checks whether all ships were hit
         {
@@ -642,17 +998,35 @@ void hitOrMiss(int coordinates) {
          Serial.println("You hit all the ships you win !");
 				 game = 0;
         }
+      }
+      else if (lighthits < 5) {
+        Serial.println("The attack was not successful!");
+      }
     }
+  }
     //Forth ship
     else if (coordinates == shipLocation[3])
     {
+      valid = 0;
+      if (position[coordinates] == 'X') {
+        Serial.println("You've already attacked this position!");
+        Serial.println("You lose your turn for not keeping track!");
+        valid = 1;
+      }
+      if (valid == 0) {
+        PreMinigame();
+
+        Serial.print("Value of counter is: ");
+        Serial.println(lighthits);
+        if (lighthits >= 5) {
         //remainingShips--;
         position[coordinates] = 'X';
         remainingShips = (remainingShips - 1);
 				battlefield();
+        Serial.println(  "---------------------------");
 				Serial.print("You attacked position  ");
 				Serial.println(coordinates);
-        Serial.println("You hit a ship");
+        Serial.println("You hit a ship!");
 				Serial.println(  "---------------------------");
         if (remainingShips == 0)//checks whether all ships were hit
         {
@@ -662,17 +1036,35 @@ void hitOrMiss(int coordinates) {
          Serial.println("You hit all the ships you win !");
 				 game = 0;
         }
+      }
+      else if (lighthits < 5) {
+        Serial.println("The attack was not successful!");
+      }
     }
+  }
     //Fith ship
     else if (coordinates == shipLocation[4])
     {
+      valid = 0;
+      if (position[coordinates] == 'X') {
+        Serial.println("You've already attacked this position!");
+        Serial.println("You lose your turn for not keeping track!");
+        valid = 1;
+      }
+      if (valid == 0) {
+        PreMinigame();
+
+        Serial.print("Value of counter is: ");
+        Serial.println(lighthits);
         //remainingShips--;
+        if (lighthits >= 5) {
         position[coordinates] = 'X';
         remainingShips = (remainingShips - 1);
 				battlefield();
+        Serial.println(  "---------------------------");
 				Serial.print("You attacked position  ");
 				Serial.println(coordinates);
-        Serial.println("You hit a ship");
+        Serial.println("You hit a ship!");
 				Serial.println(  "---------------------------");
         if (remainingShips == 0)//checks whether all ships were hit
         {
@@ -682,11 +1074,17 @@ void hitOrMiss(int coordinates) {
          Serial.println("You hit all the ships you win !");
 				 game = 0;
         }
+      }
+      else if (lighthits < 5) {
+        Serial.println("The attack was not successful!");
+      }
+    }
     }
     else
     {
         position[coordinates] = '-';
         battlefield();
+        Serial.println(  "---------------------------");
 				Serial.print("You attacked position  ");
 				Serial.println(coordinates);
         Serial.println("You did not hit a ship!");
@@ -710,6 +1108,7 @@ void hitOrMiss(int coordinates) {
 				*/
 				Serial.print("You missed by ");
 				Serial.println(difference[4]);
+				Serial.println(  "---------------------------");
     }
 }
 
@@ -732,7 +1131,7 @@ int botHitOrMiss() {
   				battlefield();
 					Serial.print("Your opponent attacked ");
 					Serial.println(placeholder);
-          Serial.println("Your ship was hit");
+          Serial.println("Your ship was hit!");
   				Serial.println(  "---------------------------");
 					move++;
 					//break;
@@ -740,7 +1139,7 @@ int botHitOrMiss() {
           if (yourRemainingShips == 0)//checks whether all ships were hit
           {
             battlefield();
-            Serial.println("You lost all your ships you lose ");
+            Serial.println("You lost all your ships! You lose! ");
 						game = 0;
             //break;
 						return(game);
@@ -764,7 +1163,7 @@ int botHitOrMiss() {
         if (yourRemainingShips == 0)//checks whether all ships were hit
         {
           battlefield();
-          Serial.println("You lost all your ships you lose ");
+          Serial.println("You lost all your ships! You lose! ");
 					game = 0;
           //break;
 					return(game);
@@ -788,7 +1187,7 @@ int botHitOrMiss() {
         if (yourRemainingShips == 0)//checks whether all ships were hit
         {
           battlefield();
-          Serial.println("You lost all your ships you lose ");
+          Serial.println("You lost all your ships! You lose! ");
 					game = 0;
           //break;
 					return(game);
@@ -812,7 +1211,7 @@ int botHitOrMiss() {
         if (yourRemainingShips == 0)//checks whether all ships were hit
         {
           battlefield();
-          Serial.println("You lost all your ships you lose ");
+          Serial.println("You lost all your ships! You lose! ");
 					game = 0;
           //break;
 					return(game);
@@ -836,7 +1235,7 @@ int botHitOrMiss() {
         if (yourRemainingShips == 0)//checks whether all ships were hit
         {
           battlefield();
-          Serial.println("You lost all your ships you lose ");
+          Serial.println("You lost all your ships! You lose! ");
 					game = 0;
           //break;
 					return(game);
@@ -924,7 +1323,7 @@ void inputs() {
 
 
 void inputs(char str[], int len) {
-  Serial.print("Enter the coordinates: ");
+  Serial.print("Enter the coordinates you wish to attack: ");
     int index = 0;
     while (index < len - 1) {
         // if something is waiting to be read on Serial0
@@ -988,7 +1387,7 @@ int main() {
 					} else if (turnCount%2 == 0){ // on even turns so opponent goes
 						//int i == 0;
 						if (botHitOrMiss() == 0){
-							Serial.println("You lost all your ships you lose ");
+							Serial.println("You lost all your ships! You lose! ");
 							break;
 						}
 						//i++;
@@ -1005,6 +1404,15 @@ int main() {
 				//Serial.println("passed randomizing yourself");
 				aiPath(); // order the AI will play each turn
 				yourInitialArray(); // initial array
+
+				Serial.println(hardShipLocation[0]);
+        Serial.println(hardShipLocation[1]);
+				Serial.println(hardShipLocation[2]);
+				Serial.println(hardShipLocation[3]);
+				Serial.println(hardShipLocation[4]);
+				Serial.println(hardShipLocation[5]);
+				Serial.println(hardShipLocation[6]);
+
 				battlefield();
 				//Serial.print("this is game ");
 				//Serial.println(game);
@@ -1021,7 +1429,7 @@ int main() {
 					//int i == 0;
 
 					if (botHitOrMiss() == 0){
-						Serial.println("You lost all your ships you lose ");
+						Serial.println("You lost all your ships! You lose! ");
 						break;
 					}
 					//i++;
@@ -1038,6 +1446,15 @@ int main() {
 			//Serial.println("passed randomizing yourself");
 			aiPath(); // order the AI will play each turn
 			yourInitialArray(); // initial array
+
+			Serial.println(hardShipLocation[0]);
+			Serial.println(hardShipLocation[1]);
+			Serial.println(hardShipLocation[2]);
+			Serial.println(hardShipLocation[3]);
+			Serial.println(hardShipLocation[4]);
+			Serial.println(hardShipLocation[5]);
+			Serial.println(hardShipLocation[6]);
+
 			battlefield();
 			//Serial.print("this is game ");
 			//Serial.println(game);
@@ -1052,11 +1469,11 @@ int main() {
 
 			} else if (turnCount%2 == 1){ // on odd turns opponent goes
 				if (botHitOrMiss() == 0){
-					Serial.println("You lost all your ships you lose ");
+					Serial.println("You lost all your ships! You lose! ");
 					break;
 				}
 				if (botHitOrMiss() == 0){
-					Serial.println("You lost all your ships you lose ");
+					Serial.println("You lost all your ships! You lose! ");
 					break;
 				}
 			}
