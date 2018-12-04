@@ -2,7 +2,28 @@
 
 
 
-Sources 
+Sources
 https://forum.arduino.cc/index.php?topic=345964.0
 
 user johnwasser
+
+
+Wiring Instructions:
+
+  Arduino Pin 13 <--> Longer LED lead |LED| Shorter LED lead <--> Resistor <--> GND
+
+  Arduino Pin 12 <--> Longer LED lead |LED| Shorter LED lead <--> Resistor <--> GND
+
+  Arduino Pin 11 <--> Longer LED lead |LED| Shorter LED lead <--> Resistor <--> GND
+
+  Arduino Pin 10 <--> Longer LED lead |LED| Shorter LED lead <--> Resistor <--> GND
+
+  Arduino Pin 9 <--> Longer LED lead |LED| Shorter LED lead <--> Resistor <--> GND
+
+  Arduino Pin 7 <--> Button lead |Button| Button lead <--> GND
+
+  Arduino Pin 6 <--> Button lead |Button| Button lead <--> GND
+
+  Arduino Pin 5 <--> Button lead |Button| Button lead <--> GND
+
+  Arduino Pin 4 <--> Button lead |Button| Button lead <--> GND
