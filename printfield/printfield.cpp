@@ -1320,6 +1320,15 @@ int main() {
 					//Serial.println("passed randomizing yourself");
 					aiPath(); // order the AI will play each turn
 	        yourInitialArray(); // initial array
+
+					Serial.println("Demo purposes ");
+					Serial.println(shipLocation[0]);
+					Serial.println(shipLocation[1]);
+					Serial.println(shipLocation[2]);
+					Serial.println(shipLocation[3]);
+					Serial.println(shipLocation[4]);
+					Serial.println();
+
 	        battlefield();
 					//Serial.print("this is game ");
 					//Serial.println(game);
@@ -1363,6 +1372,7 @@ int main() {
 				aiPath(); // order the AI will play each turn
 				yourInitialArray(); // initial array
 
+				Serial.println("Demo purposes ");
 				Serial.println(hardShipLocation[0]);
         Serial.println(hardShipLocation[1]);
 				Serial.println(hardShipLocation[2]);
@@ -1370,6 +1380,7 @@ int main() {
 				Serial.println(hardShipLocation[4]);
 				Serial.println(hardShipLocation[5]);
 				Serial.println(hardShipLocation[6]);
+				Serial.println();
 
 				battlefield();
 				//Serial.print("this is game ");
@@ -1405,6 +1416,7 @@ int main() {
 			aiPath(); // order the AI will play each turn
 			yourInitialArray(); // initial array
 
+			Serial.println("Demo purposes ");
 			Serial.println(hardShipLocation[0]);
 			Serial.println(hardShipLocation[1]);
 			Serial.println(hardShipLocation[2]);
@@ -1412,6 +1424,7 @@ int main() {
 			Serial.println(hardShipLocation[4]);
 			Serial.println(hardShipLocation[5]);
 			Serial.println(hardShipLocation[6]);
+			Serial.println();
 
 			battlefield();
 			//Serial.print("this is game ");
