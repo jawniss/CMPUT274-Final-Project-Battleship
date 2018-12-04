@@ -522,7 +522,7 @@ void hardHitOrMiss(int coordinates) {
       valid = 0;
       if (position[coordinates] == 'X') {
         Serial.println("You've already attacked this position!");
-        Serial.println("You lose your turn for not keeping track!");
+        Serial.println("You sunk the ship even more!");
         valid = 1;
       }
       if (valid == 0) {
@@ -560,7 +560,7 @@ void hardHitOrMiss(int coordinates) {
       valid = 0;
       if (position[coordinates] == 'X') {
         Serial.println("You've already attacked this position!");
-        Serial.println("You lose your turn for not keeping track!");
+        Serial.println("You sunk the ship even more!");
         valid = 1;
       }
       if (valid == 0) {
@@ -599,7 +599,7 @@ void hardHitOrMiss(int coordinates) {
       valid = 0;
       if (position[coordinates] == 'X') {
         Serial.println("You've already attacked this position!");
-        Serial.println("You lose your turn for not keeping track!");
+        Serial.println("You sunk the ship even more!");
         valid = 1;
       }
       if (valid == 0) {
@@ -638,7 +638,7 @@ void hardHitOrMiss(int coordinates) {
       valid = 0;
       if (position[coordinates] == 'X') {
         Serial.println("You've already attacked this position!");
-        Serial.println("You lose your turn for not keeping track!");
+        Serial.println("You sunk the ship even more!");
         valid = 1;
       }
       if (valid == 0) {
@@ -677,7 +677,7 @@ void hardHitOrMiss(int coordinates) {
       valid = 0;
       if (position[coordinates] == 'X') {
         Serial.println("You've already attacked this position!");
-        Serial.println("You lose your turn for not keeping track!");
+        Serial.println("You sunk the ship even more!");
         valid = 1;
       }
       if (valid == 0) {
@@ -715,7 +715,7 @@ void hardHitOrMiss(int coordinates) {
       valid = 0;
       if (position[coordinates] == 'X') {
         Serial.println("You've already attacked this position!");
-        Serial.println("You lose your turn for not keeping track!");
+        Serial.println("You sunk the ship even more!");
         valid = 1;
       }
       if (valid == 0) {
@@ -753,7 +753,7 @@ void hardHitOrMiss(int coordinates) {
       valid = 0;
       if (position[coordinates] == 'X') {
         Serial.println("You've already attacked this position!");
-        Serial.println("You lose your turn for not keeping track!");
+        Serial.println("You sunk the ship even more!");
         valid = 1;
       }
       if (valid == 0) {
@@ -835,7 +835,7 @@ void hitOrMiss(int coordinates) {
       valid = 0;
       if (position[coordinates] == 'X') {
         Serial.println("You've already attacked this position!");
-        Serial.println("You lose your turn for not keeping track!");
+        Serial.println("You sunk the ship even more!");
         valid = 1;
       }
       if (valid == 0) {
@@ -872,7 +872,7 @@ void hitOrMiss(int coordinates) {
       valid = 0;
       if (position[coordinates] == 'X') {
         Serial.println("You've already attacked this position!");
-        Serial.println("You lose your turn for not keeping track!");
+        Serial.println("You sunk the ship even more!");
         valid = 1;
       }
       if (valid == 0) {
@@ -910,7 +910,7 @@ void hitOrMiss(int coordinates) {
       valid = 0;
       if (position[coordinates] == 'X') {
         Serial.println("You've already attacked this position!");
-        Serial.println("You lose your turn for not keeping track!");
+        Serial.println("You sunk the ship even more!");
         valid = 1;
       }
       if (valid == 0) {
@@ -948,7 +948,7 @@ void hitOrMiss(int coordinates) {
       valid = 0;
       if (position[coordinates] == 'X') {
         Serial.println("You've already attacked this position!");
-        Serial.println("You lose your turn for not keeping track!");
+        Serial.println("You sunk the ship even more!");
         valid = 1;
       }
       if (valid == 0) {
@@ -986,7 +986,7 @@ void hitOrMiss(int coordinates) {
       valid = 0;
       if (position[coordinates] == 'X') {
         Serial.println("You've already attacked this position!");
-        Serial.println("You lose your turn for not keeping track!");
+        Serial.println("You sunk the ship even more!");
         valid = 1;
       }
       if (valid == 0) {
@@ -1298,7 +1298,7 @@ int main() {
         setup();
 				//Serial.println("passed setup");
 				int difficulty = gamedifficulty();
-        if (difficulty != 1 || difficulty != 2 || difficulty != 3) {
+        if (difficulty != 1 && difficulty != 2 && difficulty != 3) {
           validdifficulty = 1;
           while (validdifficulty == 1) {
             Serial.println("Invalid mode, please reenter: ");
