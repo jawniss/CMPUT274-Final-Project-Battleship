@@ -14,6 +14,8 @@ const int Pin1 = 1;
 int counter = 0;
 int lighthits;
 int valid;
+int validdifficulty;
+int validcoordinates;
 
 // Set the pins and LEDS as inputs and outputs
 void setup() {
@@ -40,37 +42,7 @@ void setup() {
     randomSeed(analogRead(0));
 }
 
-/*
-void HitMissIndicator() {
-    if (***hit a ship ***) {
-			digitalWrite(HitMissLEDs[0], HIGH);
-			digitalWrite(HitMissLEDs[1], LOW);
-			delay(400);
-			digitalWrite(HitMissLEDs[0], LOW);
-			delay(400);
-			digitalWrite(HitMissLEDs[0], HIGH);
-			delay(400);
-			digitalWrite(HitMissLEDs[0], LOW);
-			delay(400);
-			digitalWrite(HitMissLEDs[0], HIGH);
-			delay(1500);
-			digitalWrite(HitMissLEDs[0], LOW);
-		} else if (***missed a ship***) {
-			digitalWrite(HitMissLEDs[0], LOW);
-			digitalWrite(HitMissLEDs[1], HIGH);
-			delay(400);
-			digitalWrite(HitMissLEDs[1], LOW);
-			delay(400);
-			digitalWrite(HitMissLEDs[1], HIGH);
-			delay(400);
-			digitalWrite(HitMissLEDs[1], LOW);
-			delay(400);
-			digitalWrite(HitMissLEDs[1], HIGH);
-			delay(1500);
-			digitalWrite(HitMissLEDs[1], LOW);
-		}
-}
-*/
+
 
 
 int Minigame() {
@@ -144,40 +116,6 @@ int PreMinigame() {
 
 
 
-/*
-void SuccessFail() {
-	if (mode == easy) {
-		if (counter >= 5) {
-			Successful hit
-		}
-	}
-	if (mode == medium) {
-		if (counter >= 7) {
-			Successful hit
-		}
-	}
-	if (mode == hard) {
-		if (counter >= 10) {
-			Successful hit
-		}
-	}
-}
-*/
-
-
-
-
-/*
-const int Pin1 = 1;
-void setup() {
-    // setup function for initializing
-    init();
-    Serial.begin(9600);
-    Serial3.begin(9600);
-    randomSeed(analogRead(0)); // to randomize the seed for random
-}
-
-*/
 
 int shipLocation[5];
 int hardShipLocation[7];
@@ -1360,6 +1298,16 @@ int main() {
         setup();
 				//Serial.println("passed setup");
 				int difficulty = gamedifficulty();
+        if (difficulty != 1 || difficulty != 2 || difficulty != 3) {
+          validdifficulty = 1;
+          while (validdifficulty == 1) {
+            Serial.println("Invalid mode, please reenter: ");
+            difficulty = gamedifficulty();
+            if (difficulty == 1 || difficulty == 2 || difficulty == 3) {
+              validdifficulty = 0;
+            }
+          }
+        }
 				//Serial.println("passed setting game difficulty");
 
 				if (difficulty == 1){
@@ -1382,6 +1330,16 @@ int main() {
 						//Serial.println(turnCount);
 						if (turnCount%2 == 1){ //on odd turns you go
 			        int coordinates = theirinput();
+              if (coordinates < 0 || coordinates > 24) {
+                validcoordinates = 1;
+                while (validcoordinates == 1) {
+                  Serial.println("Invalid coordinates, please try again: ");
+                  coordinates = theirinput();
+                  if (coordinates >= 0 && coordinates <= 24) {
+                    validcoordinates = 0;
+                  }
+                }
+              }
 			        hitOrMiss(coordinates);
 
 					} else if (turnCount%2 == 0){ // on even turns so opponent goes
