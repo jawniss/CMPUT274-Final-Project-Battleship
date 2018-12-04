@@ -1093,7 +1093,7 @@ int botHitOrMiss() {
         battlefield();
 				Serial.print("Your opponent attacked ");
 				Serial.println(placeholder);
-        Serial.println("Your ship was hit");
+        Serial.println("Your ship was hit!");
         Serial.println(  "---------------------------");
 				move++;
 				//break;
@@ -1117,7 +1117,7 @@ int botHitOrMiss() {
         battlefield();
 				Serial.print("Your opponent attacked ");
 				Serial.println(placeholder);
-        Serial.println("Your ship was hit");
+        Serial.println("Your ship was hit!");
         Serial.println(  "---------------------------");
 				move++;
 				//break;
@@ -1141,7 +1141,7 @@ int botHitOrMiss() {
         battlefield();
 				Serial.print("Your opponent attacked ");
 				Serial.println(placeholder);
-        Serial.println("Your ship was hit");
+        Serial.println("Your ship was hit!");
         Serial.println(  "---------------------------");
 				move++;
 				//break;
@@ -1165,7 +1165,7 @@ int botHitOrMiss() {
         battlefield();
 				Serial.print("Your opponent attacked ");
 				Serial.println(placeholder);
-        Serial.println("Your ship was hit");
+        Serial.println("Your ship was hit!");
         Serial.println(  "---------------------------");
 				move++;
 				//break;
@@ -1296,6 +1296,9 @@ uint32_t theirinput() {
 
 int main() {
         setup();
+        Serial.println("Welcome to Battleship, Commander.");
+        Serial.print("For coordinates, only input integers. All non-integer ");
+        Serial.println("inputs will be defaulted to coordinate '0'.");
 				//Serial.println("passed setup");
 				int difficulty = gamedifficulty();
         if (difficulty != 1 && difficulty != 2 && difficulty != 3) {
