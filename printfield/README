@@ -1,0 +1,39 @@
+
+
+
+
+Sources
+  https://forum.arduino.cc/index.php?topic=345964.0
+
+  user johnwasser
+
+  https://arduino.stackexchange.com/questions/22272/how-do-i-run-a-loop-for-a-specific-amount-of-time
+
+  user JRobert
+
+Accessories:
+  - 560 Ohm (Grn Blu Brown) resistor x 5
+  - LED (Grn) x 4
+  - LED (Red) x 1
+  - Arduino Mega Board (AMG)
+  - Button x 4
+
+Wiring Instructions:
+
+  Arduino Pin 13 <--> Longer LED lead |LED| Shorter LED lead <--> Resistor <--> GND
+
+  Arduino Pin 12 <--> Longer LED lead |RED LED| Shorter LED lead <--> Resistor <--> GND
+
+  Arduino Pin 11 <--> Longer LED lead |LED| Shorter LED lead <--> Resistor <--> GND
+
+  Arduino Pin 10 <--> Longer LED lead |LED| Shorter LED lead <--> Resistor <--> GND
+
+  Arduino Pin 9 <--> Longer LED lead |LED| Shorter LED lead <--> Resistor <--> GND
+
+  Arduino Pin 7 <--> Button lead |Button| Button lead <--> GND
+
+  Arduino Pin 6 <--> Button lead |Button| Button lead <--> GND
+
+  Arduino Pin 5 <--> Button lead |Button| Button lead <--> GND
+
+  Arduino Pin 4 <--> Button lead |Button| Button lead <--> GND
