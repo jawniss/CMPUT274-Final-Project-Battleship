@@ -10,6 +10,7 @@ Included Files:
     * README
     * Makefile
     * read_int.h
+    * arduinoSetup.jpg (picture of the setup)
 
 Accessories:
   - 560 Ohm (Grn Blu Brown) resistor x 5
@@ -46,7 +47,7 @@ Description:
     Our version of battleship also has three difficulties (easy medium and hard). Where easy mode you go first both sides have the same amount of ships(5). Medium mode the bot goes first and they start with (7) ships while you still have the same (5). Hard mode the bot goes first and they take two turns for every turn you take. All of these diffuculties include the minigame difficulties too.   
 
 
-  Running Instructions:
+Running Instructions:
     1) Make sure your serial-mon is in full screen or else the visuals of the game will not show up properly
     2) enter the file directory and type "make upload && serial-mon" into the terminal
     3) when prompted a difficulty type in the appropriate diffuculty for user press enter 
@@ -54,7 +55,10 @@ Description:
     5) input the coordinates you wish to attack
     6) further instructions will be displayed on serial-mon once you get passed Running Instructions 1)
 
-  Sources:
+Notes:
+    1) sometimes when you run after inputing a diffuculty and entering the game will freeze if it does just reset the game. By pressing the red reset buttom on arduino
+
+Sources:
 
   function void aiPath() line 238
   https://forum.arduino.cc/index.php?topic=345964.0
