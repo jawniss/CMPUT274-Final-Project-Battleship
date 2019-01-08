@@ -47,11 +47,12 @@ Description:
 
 
   Running Instructions:
-    1) enter the file directory and type "make upload && serial-mon" into the terminal
-    2) when prompted a difficulty type in the appropriate diffuculty for user press enter 
-    3) press enter again when prompted to start the game 
-    4) input the coordinates you wish to attack
-    5) further instructions will be displayed on serial-mon once you get passed Running Instructions 1)
+    1) Make sure your serial-mon is in full screen or else the visuals of the game will not show up properly
+    2) enter the file directory and type "make upload && serial-mon" into the terminal
+    3) when prompted a difficulty type in the appropriate diffuculty for user press enter 
+    4) press enter again when prompted to start the game 
+    5) input the coordinates you wish to attack
+    6) further instructions will be displayed on serial-mon once you get passed Running Instructions 1)
 
   Sources:
 
